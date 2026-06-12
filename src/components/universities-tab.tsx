@@ -18,14 +18,14 @@ export default function UniversitiesTab({ toggleWatchlist, isWatchlisted }: Univ
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
   const [doctoralOnly, setDoctoralOnly] = useState(false)
-  const [manaakiNzOnly, setManaakiNzOnly] = useState(false)
+  const [daadOnly, setDaadOnly] = useState(false)
   const [watchlistedOnly, setWatchlistedOnly] = useState(false)
   const [typeFilter, setTypeFilter] = useState('all')
-  const [islandFilter, setIslandFilter] = useState('all')
+  const [stateFilter, setStateFilter] = useState('all')
   const [fieldFilter, setFieldFilter] = useState('all')
   const [showFilters, setShowFilters] = useState(false)
   const [visibleCount, setVisibleCount] = useState(12)
-  const [islands, setIslands] = useState<string[]>([])
+  const [states, setStates] = useState<string[]>([])
   const [fields, setFields] = useState<string[]>([])
 
   useEffect(() => {
@@ -33,8 +33,8 @@ export default function UniversitiesTab({ toggleWatchlist, isWatchlisted }: Univ
       .then((r) => r.json())
       .then((data) => {
         setInstitutions(data)
-        const islandSet = new Set<string>(data.map((u: Institution) => u.country))
-        setIslands(Array.from(islandSet).sort())
+        const stateSet = new Set<string>(data.map((u: Institution) => u.country))
+        setStates(Array.from(stateSet).sort())
         const fieldSet = new Set<string>()
         data.forEach((u: Institution) => {
           u.fields.split('|').forEach((f: string) => fieldSet.add(f.trim()))
@@ -57,10 +57,10 @@ export default function UniversitiesTab({ toggleWatchlist, isWatchlisted }: Univ
       if (!match) return false
     }
     if (doctoralOnly && !inst.funding?.doctoralScholarshipAvailable) return false
-    if (manaakiNzOnly && !inst.funding?.manaakiNzEligible) return false
+    if (daadOnly && !inst.funding?.daadEligible) return false
     if (watchlistedOnly && !isWatchlisted(inst.id)) return false
     if (typeFilter !== 'all' && inst.type !== typeFilter) return false
-    if (islandFilter !== 'all' && inst.country !== islandFilter) return false
+    if (stateFilter !== 'all' && inst.country !== stateFilter) return false
     if (fieldFilter !== 'all' && !inst.fields.includes(fieldFilter)) return false
     return true
   })
@@ -68,19 +68,19 @@ export default function UniversitiesTab({ toggleWatchlist, isWatchlisted }: Univ
   const clearFilters = () => {
     setSearch('')
     setDoctoralOnly(false)
-    setManaakiNzOnly(false)
+    setDaadOnly(false)
     setWatchlistedOnly(false)
     setTypeFilter('all')
-    setIslandFilter('all')
+    setStateFilter('all')
     setFieldFilter('all')
   }
 
-  const hasFilters = search || doctoralOnly || manaakiNzOnly || watchlistedOnly || typeFilter !== 'all' || islandFilter !== 'all' || fieldFilter !== 'all'
+  const hasFilters = search || doctoralOnly || daadOnly || watchlistedOnly || typeFilter !== 'all' || stateFilter !== 'all' || fieldFilter !== 'all'
 
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <Loader2 className="size-8 text-indigo-600 animate-spin" />
+        <Loader2 className="size-8 text-red-600 animate-spin" />
       </div>
     )
   }
@@ -96,13 +96,13 @@ export default function UniversitiesTab({ toggleWatchlist, isWatchlisted }: Univ
             value={search}
             onChange={(e) => { setSearch(e.target.value); setVisibleCount(12) }}
             placeholder="Search institutions, cities, fields..."
-            className="w-full h-10 pl-10 pr-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-sm text-gray-900 dark:text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+            className="w-full h-10 pl-10 pr-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-sm text-gray-900 dark:text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
           />
         </div>
         <Button
           variant="outline"
           onClick={() => setShowFilters(!showFilters)}
-          className={`h-10 px-3 ${showFilters ? 'border-indigo-500 text-indigo-600' : ''}`}
+          className={`h-10 px-3 ${showFilters ? 'border-red-500 text-red-600' : ''}`}
         >
           <Filter className="size-4" />
         </Button>
@@ -122,8 +122,8 @@ export default function UniversitiesTab({ toggleWatchlist, isWatchlisted }: Univ
               <span className="text-sm text-gray-700 dark:text-gray-300">Doctoral Scholarship</span>
             </div>
             <div className="flex items-center gap-2">
-              <Switch checked={manaakiNzOnly} onCheckedChange={setManaakiNzOnly} />
-              <span className="text-sm text-gray-700 dark:text-gray-300">Manaaki NZ Eligible</span>
+              <Switch checked={daadOnly} onCheckedChange={setDaadOnly} />
+              <span className="text-sm text-gray-700 dark:text-gray-300">DAAD Eligible</span>
             </div>
             <div className="flex items-center gap-2">
               <Switch checked={watchlistedOnly} onCheckedChange={setWatchlistedOnly} />
@@ -141,12 +141,12 @@ export default function UniversitiesTab({ toggleWatchlist, isWatchlisted }: Univ
               <option value="Research Institute">Research Institute</option>
             </select>
             <select
-              value={islandFilter}
-              onChange={(e) => setIslandFilter(e.target.value)}
+              value={stateFilter}
+              onChange={(e) => setStateFilter(e.target.value)}
               className="h-9 px-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm text-gray-700 dark:text-gray-300"
             >
-              <option value="all">All Islands</option>
-              {islands.map((s) => (
+              <option value="all">All States</option>
+              {states.map((s) => (
                 <option key={s} value={s}>{s}</option>
               ))}
             </select>

@@ -8,7 +8,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { Progress } from '@/components/ui/progress'
 import { scholarships as allScholarships, searchScholarships } from '@/lib/static-data'
 
-export default function ManaakiNZGuideTab() {
+export default function DAADGuideTab() {
   const [searchQuery, setSearchQuery] = useState('')
   const [checkedDocs, setCheckedDocs] = useState<string[]>([])
 
@@ -17,17 +17,18 @@ export default function ManaakiNZGuideTab() {
   }, [searchQuery])
 
   const requiredDocuments = [
-    { id: 'passport', label: 'Valid Passport (minimum 6 months validity)' },
-    { id: 'degree', label: 'MSc Degree Certificate & Transcripts (attested)' },
-    { id: 'cv', label: 'CV / Resume (NZ format preferred)' },
-    { id: 'motivation', label: 'Research Proposal / Personal Statement' },
+    { id: 'passport', label: 'Valid Passport' },
+    { id: 'degree', label: 'MSc Degree Certificate & Transcripts (notarized + apostilled)' },
+    { id: 'cv', label: 'CV/Resume (European format)' },
+    { id: 'research-proposal', label: 'Research Proposal (detailed, 5-10 pages)' },
     { id: 'references', label: '2 Reference Letters (academic)' },
-    { id: 'language', label: 'IELTS Score (minimum 6.5, no band below 6.0)' },
-    { id: 'manaaki-form', label: 'Manaaki NZ Scholarship Application Form (online portal)' },
+    { id: 'language', label: 'IELTS/TOEFL Score' },
+    { id: 'daad-form', label: 'DAAD Application Form (online portal)' },
+    { id: 'acceptance', label: 'Letter of Acceptance from German professor (Betreuer)' },
     { id: 'photos', label: 'Passport Photos' },
-    { id: 'health', label: 'Health Certificate / Medical Examination' },
-    { id: 'police', label: 'Police Clearance Certificate from Nepal Police' },
-    { id: 'apostille', label: 'Document Attestation (MOFA Nepal)' },
+    { id: 'health', label: 'Health Insurance Proof' },
+    { id: 'police', label: 'Police Clearance Certificate' },
+    { id: 'apostille', label: 'Document Apostille (MOFA Nepal)' },
   ]
 
   const toggleDoc = (id: string) => {
@@ -43,106 +44,106 @@ export default function ManaakiNZGuideTab() {
   return (
     <div className="space-y-6 p-4 md:p-6">
       {/* Header */}
-      <Card className="border-0 bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-700 text-white overflow-hidden">
+      <Card className="border-0 bg-gradient-to-r from-red-600 via-emerald-600 to-red-700 text-white overflow-hidden">
         <CardContent className="p-6 md:p-8">
-          <h2 className="text-2xl font-bold mb-1">🎓 Manaaki NZ Guide</h2>
-          <p className="text-indigo-100 text-sm max-w-xl">
-            Complete guide to New Zealand scholarships for Nepali Physics students.
-            The Manaaki New Zealand Scholarship is the most important funding route for Nepali students — full tuition, NZD $1,500/month stipend, airfare, and health insurance!
+          <h2 className="text-2xl font-bold mb-1">🎓 DAAD Scholarship Guide</h2>
+          <p className="text-red-100 text-sm max-w-xl">
+            Complete guide to German scholarships for Nepali Physics students.
+            The DAAD (German Academic Exchange Service) scholarship is the most important funding route for Nepali students — €1,300/month stipend, health insurance, travel allowance from Nepal, and NO tuition fees at German universities!
           </p>
         </CardContent>
       </Card>
 
-      {/* Manaaki NZ PhD Scholarship Section */}
-      <Card className="border-indigo-200 dark:border-indigo-800/50">
+      {/* DAAD Research Grants for Doctoral Candidates Section */}
+      <Card className="border-red-200 dark:border-red-800/50">
         <CardContent className="p-4 md:p-6">
           <div className="flex items-start gap-4">
-            <div className="size-12 rounded-xl bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center shrink-0">
-              <BookOpen className="size-6 text-indigo-600" />
+            <div className="size-12 rounded-xl bg-red-100 dark:bg-red-900/30 flex items-center justify-center shrink-0">
+              <BookOpen className="size-6 text-red-600" />
             </div>
             <div>
-              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1">Manaaki New Zealand Scholarship 🌟</h3>
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1">DAAD Research Grants for Doctoral Candidates 🌟</h3>
               <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                The MOST IMPORTANT scholarship for Nepali students! Fully funded by the New Zealand Government (MFAT).
-                Covers full tuition, NZD $1,500/month living allowance, return airfare from Nepal, health and travel insurance,
-                establishment allowance, and supplementary academic support.
+                The MOST IMPORTANT scholarship for Nepali students! Fully funded by the German Government (DAAD).
+                Covers €1,300/month living allowance, travel allowance from Nepal, full health insurance,
+                research material allowance, and NO tuition fees at any German university.
               </p>
               <div className="space-y-1 text-xs text-gray-500 dark:text-gray-400">
-                <p>• <strong>Living Allowance:</strong> NZD $1,500/month (tax-free)</p>
-                <p>• <strong>Tuition:</strong> Full tuition covered (NZD $28,000-38,700/year value)</p>
-                <p>• <strong>Duration:</strong> Up to 4 years (PhD)</p>
-                <p>• <strong>Travel:</strong> Return airfare from Kathmandu to NZ</p>
-                <p>• <strong>Establishment Allowance:</strong> NZD $3,000 one-time</p>
+                <p>• <strong>Living Allowance:</strong> €1,300/month (tax-free)</p>
+                <p>• <strong>Tuition:</strong> NO tuition fees at German universities! (worth €0)</p>
+                <p>• <strong>Duration:</strong> Up to 3 years (PhD)</p>
+                <p>• <strong>Travel:</strong> Travel allowance from Nepal to Germany</p>
                 <p>• <strong>Health Insurance:</strong> Full coverage for entire duration</p>
-                <p>• <strong>IELTS:</strong> Minimum 6.5 required (no band below 6.0)</p>
-                <p>• <strong>Apply through:</strong> Manaaki NZ online portal + NZ High Commission Kathmandu</p>
+                <p>• <strong>Research Material Allowance:</strong> €460 one-time</p>
+                <p>• <strong>IELTS:</strong> Minimum 6.0 required</p>
+                <p>• <strong>Apply through:</strong> DAAD portal (deadline typically November each year)</p>
               </div>
-              <a href="https://www.manaaki.nz/" target="_blank" rel="noopener noreferrer" className="inline-block mt-2 text-sm text-indigo-600 hover:underline">
-                Manaaki NZ Official Website →
+              <a href="https://www.daad.de/" target="_blank" rel="noopener noreferrer" className="inline-block mt-2 text-sm text-red-600 hover:underline">
+                DAAD Official Website →
               </a>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      {/* University Doctoral Scholarships Section */}
-      <Card className="border-purple-200 dark:border-purple-800/50">
+      {/* TV-L E13 Research Positions Section */}
+      <Card className="border-emerald-200 dark:border-emerald-800/50">
         <CardContent className="p-4 md:p-6">
           <div className="flex items-start gap-4">
-            <div className="size-12 rounded-xl bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center shrink-0">
-              <BookOpen className="size-6 text-purple-600" />
+            <div className="size-12 rounded-xl bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center shrink-0">
+              <BookOpen className="size-6 text-emerald-600" />
             </div>
             <div>
-              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1">University Doctoral Scholarships</h3>
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1">TV-L E13 Research Positions</h3>
               <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                All 8 NZ universities offer doctoral scholarships. Typical stipend is NZD $27,000-28,000/year with full tuition coverage.
-                These are available for both domestic and international students. MacDiarmid Institute students may receive additional top-up.
+                Many German universities and research institutes hire PhD students as research assistants under the TV-L E13 pay scale.
+                This is an employment contract rather than a scholarship — you earn a salary and pay social insurance, but receive pension benefits and full employee rights.
               </p>
               <div className="space-y-1 text-xs text-gray-500 dark:text-gray-400">
-                <p>• <strong>Stipend:</strong> NZD $27,000-28,000/year (tax-free)</p>
-                <p>• <strong>Tuition:</strong> Full tuition covered at all universities</p>
-                <p>• <strong>Duration:</strong> 3-4 years (PhD)</p>
-                <p>• <strong>Apply:</strong> Directly through university graduate research admissions</p>
-                <p>• <strong>MacDiarmid Top-up:</strong> NZD $2,000-5,000/year additional at node universities</p>
+                <p>• <strong>Stipend:</strong> €1,950-2,138/month (TV-L E13, 65-75%)</p>
+                <p>• <strong>Tuition:</strong> No tuition fees at German universities</p>
+                <p>• <strong>Duration:</strong> 3-5 years (PhD)</p>
+                <p>• <strong>Apply:</strong> Directly through professor/research group advertisements</p>
+                <p>• <strong>MPI positions:</strong> TV-L E13 75-100% (€2,138-2,850/month)</p>
               </div>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      {/* NZ High Commission Nepal */}
+      {/* DAAD Regional Office & German Embassy Nepal */}
       <Card className="border-gray-200 dark:border-gray-700">
         <CardContent className="p-4 md:p-6">
-          <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-3">🇳🇿 NZ High Commission Nepal</h3>
+          <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-3">🇩🇪 DAAD Regional Office & German Embassy Nepal</h3>
           <div className="grid sm:grid-cols-2 gap-3 text-xs text-gray-600 dark:text-gray-400">
             <div className="flex items-start gap-2">
               <MapPin className="size-4 text-gray-400 shrink-0 mt-0.5" />
               <div>
                 <p className="font-medium text-gray-900 dark:text-white">Address</p>
-                <p>Bansbari Heights, Maharajgunj, Kathmandu, Nepal</p>
+                <p>Gyaneshwar, Kathmandu, Nepal (DAAD Information Centre)</p>
               </div>
             </div>
             <div className="flex items-start gap-2">
               <Phone className="size-4 text-gray-400 shrink-0 mt-0.5" />
               <div>
                 <p className="font-medium text-gray-900 dark:text-white">Phone</p>
-                <p>+977-1-4371-678</p>
+                <p>+49-228-882-0 (DAAD Bonn)</p>
               </div>
             </div>
             <div className="flex items-start gap-2">
               <Globe className="size-4 text-gray-400 shrink-0 mt-0.5" />
               <div>
-                <p className="font-medium text-gray-900 dark:text-white">Manaaki NZ Portal</p>
-                <a href="https://www.manaaki.nz/" target="_blank" rel="noopener noreferrer" className="text-indigo-600 hover:underline">
-                  manaaki.nz
+                <p className="font-medium text-gray-900 dark:text-white">DAAD Portal</p>
+                <a href="https://www.daad.de/" target="_blank" rel="noopener noreferrer" className="text-red-600 hover:underline">
+                  daad.de
                 </a>
               </div>
             </div>
             <div className="flex items-start gap-2">
               <Clock className="size-4 text-gray-400 shrink-0 mt-0.5" />
               <div>
-                <p className="font-medium text-gray-900 dark:text-white">Student Visa</p>
-                <p>Immigration NZ online portal, 4-8 weeks processing</p>
+                <p className="font-medium text-gray-900 dark:text-white">German Embassy</p>
+                <p>Kathmandu (visa processing, 4-8 weeks)</p>
               </div>
             </div>
           </div>
@@ -153,17 +154,17 @@ export default function ManaakiNZGuideTab() {
       <Card>
         <CardContent className="p-4 md:p-6">
           <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-4">
-            📅 Application Timeline for Semester 1, 2026 (February)
+            📅 Application Timeline for DAAD November Deadline
           </h3>
           <div className="space-y-3">
             {[
-              { step: 1, month: 'Mar-May 2025', desc: 'Research programs, identify supervisors, start IELTS preparation', color: 'bg-indigo-500' },
-              { step: 2, month: 'Feb-Apr 2025', desc: 'Apply for Manaaki NZ Scholarship via online portal (typically opens Feb, deadline Apr)', color: 'bg-indigo-600' },
-              { step: 3, month: 'May-Jul 2025', desc: 'Submit university applications (rolling admissions, but early is better)', color: 'bg-purple-600' },
-              { step: 4, month: 'Aug-Oct 2025', desc: 'Receive admission offers; Manaaki NZ interview and selection', color: 'bg-indigo-700' },
-              { step: 5, month: 'Nov-Dec 2025', desc: 'Accept offers, apply for university doctoral scholarship if not on Manaaki NZ', color: 'bg-purple-700' },
-              { step: 6, month: 'Dec 2025-Jan 2026', desc: 'Apply for NZ student visa; arrange accommodation and travel', color: 'bg-indigo-800' },
-              { step: 7, month: 'Feb-Mar 2026', desc: 'Arrive in New Zealand, enroll, start your PhD research! Kia Ora!', color: 'bg-purple-600' },
+              { step: 1, month: 'Mar-May 2025', desc: 'Research programs, identify supervisors, start IELTS preparation', color: 'bg-red-500' },
+              { step: 2, month: 'Jun-Sep 2025', desc: 'Contact potential supervisors, prepare research proposal', color: 'bg-red-600' },
+              { step: 3, month: 'Oct-Nov 2025', desc: 'Apply for DAAD scholarship via portal (deadline typically Nov)', color: 'bg-emerald-600' },
+              { step: 4, month: 'Dec 2025-Feb 2026', desc: 'DAAD selection process, interviews', color: 'bg-red-700' },
+              { step: 5, month: 'Mar-May 2026', desc: 'Receive DAAD offer, apply for university admission', color: 'bg-emerald-700' },
+              { step: 6, month: 'Jun-Jul 2026', desc: 'Apply for German student visa, arrange accommodation', color: 'bg-red-800' },
+              { step: 7, month: 'Sep-Oct 2026', desc: 'Arrive in Germany, enroll, start your PhD! Willkommen!', color: 'bg-emerald-600' },
             ].map((item) => (
               <div key={item.step} className="flex items-start gap-3">
                 <div className={`size-8 rounded-full ${item.color} text-white flex items-center justify-center text-xs font-bold shrink-0`}>
@@ -186,18 +187,18 @@ export default function ManaakiNZGuideTab() {
             📝 IELTS Requirement
           </h3>
           <div className="space-y-2 text-xs text-gray-600 dark:text-gray-400">
-            <p>NZ universities require IELTS as proof of English proficiency. Here are the typical minimum scores:</p>
+            <p>German universities require proof of English proficiency. Here are the typical requirements:</p>
             <div className="grid grid-cols-2 gap-2 mt-3">
-              <div className="p-2 rounded bg-indigo-50 dark:bg-indigo-950/20">
-                <p className="font-medium text-indigo-700 dark:text-indigo-300">IELTS 6.5</p>
-                <p>All NZ universities (standard requirement across all 8 universities)</p>
+              <div className="p-2 rounded bg-red-50 dark:bg-red-950/20">
+                <p className="font-medium text-red-700 dark:text-red-300">IELTS 6.0-6.5</p>
+                <p>Varies by university (DAAD requires minimum 6.0)</p>
               </div>
               <div className="p-2 rounded bg-amber-50 dark:bg-amber-950/20">
-                <p className="font-medium text-amber-700 dark:text-amber-300">No band below 6.0</p>
-                <p>Manaaki NZ Scholarship and most universities require no band below 6.0</p>
+                <p className="font-medium text-amber-700 dark:text-amber-300">TOEFL iBT 80+</p>
+                <p>Some accept TOEFL iBT 80+ or Cambridge certificates</p>
               </div>
             </div>
-            <p className="mt-2"><strong>Tip:</strong> Take IELTS early! IDP Nepal and British Council Nepal offer tests in Kathmandu regularly. Score is valid for 2 years. Manaaki NZ requires minimum 6.5 with no band below 6.0. Some universities also accept TOEFL iBT 90+ or PTE Academic 58+.</p>
+            <p className="mt-2"><strong>Tip:</strong> Take IELTS early! IDP Nepal and British Council Nepal offer tests in Kathmandu regularly. Score is valid for 2 years. DAAD requires minimum IELTS 6.0, but many universities prefer 6.5. Some universities also accept TOEFL iBT 80+ or Cambridge certificates.</p>
           </div>
         </CardContent>
       </Card>
@@ -247,7 +248,7 @@ export default function ManaakiNZGuideTab() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search scholarships..."
-              className="w-full h-9 px-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full h-9 px-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
             />
           </div>
           {Object.entries(scholarshipCategories).map(([category, items]) => (
@@ -258,7 +259,7 @@ export default function ManaakiNZGuideTab() {
               </h4>
               <div className="grid gap-2 sm:grid-cols-2">
                 {items.slice(0, 4).map((s) => (
-                  <div key={s.id} className="p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-indigo-300 dark:hover:border-indigo-700 transition-colors">
+                  <div key={s.id} className="p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-red-300 dark:hover:border-red-700 transition-colors">
                     <p className="text-xs font-medium text-gray-900 dark:text-white">{s.title}</p>
                     <p className="text-xs text-gray-500 mt-1 line-clamp-2">{s.content.slice(0, 100)}...</p>
                   </div>
@@ -270,24 +271,26 @@ export default function ManaakiNZGuideTab() {
       </Card>
 
       {/* Doctoral Stipend Explanation */}
-      <Card className="border-purple-200 dark:border-purple-800/50">
+      <Card className="border-emerald-200 dark:border-emerald-800/50">
         <CardContent className="p-4 md:p-6">
-          <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-2">💵 Doctoral Stipend Explained</h3>
+          <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-2">💶 Doctoral Stipend Explained</h3>
           <div className="space-y-2 text-xs text-gray-600 dark:text-gray-400">
-            <p>Most NZ PhD positions in physics are funded through university doctoral scholarships or MacDiarmid Institute scholarships. You receive a <strong>tax-free stipend</strong> for living costs, and tuition is fully covered.</p>
-            <div className="grid grid-cols-2 gap-2 mt-3">
-              <div className="p-2 rounded bg-indigo-50 dark:bg-indigo-950/20">
-                <p className="font-medium text-indigo-700 dark:text-indigo-300">Standard Doctoral</p>
-                <p>NZD $27,000-28,000/year</p>
-                <p>NZD $2,250-2,333/month</p>
+            <p>Most German PhD positions in physics are funded through TV-L E13 employment contracts or DAAD scholarships. You receive a <strong>stipend or salary</strong> for living costs, and there are NO tuition fees at any German university.</p>
+            <div className="grid grid-cols-3 gap-2 mt-3">
+              <div className="p-2 rounded bg-red-50 dark:bg-red-950/20">
+                <p className="font-medium text-red-700 dark:text-red-300">Standard TV-L E13 (65%)</p>
+                <p>~€1,950/month</p>
               </div>
-              <div className="p-2 rounded bg-purple-50 dark:bg-purple-950/20">
-                <p className="font-medium text-purple-700 dark:text-purple-300">+ MacDiarmid Top-up</p>
-                <p>NZD $2,000-5,000/year</p>
-                <p>Total: ~$29,000-33,000/yr</p>
+              <div className="p-2 rounded bg-emerald-50 dark:bg-emerald-950/20">
+                <p className="font-medium text-emerald-700 dark:text-emerald-300">MPI TV-L E13 (75%)</p>
+                <p>~€2,138/month</p>
+              </div>
+              <div className="p-2 rounded bg-amber-50 dark:bg-amber-950/20">
+                <p className="font-medium text-amber-700 dark:text-amber-300">DAAD</p>
+                <p>€1,300/month</p>
               </div>
             </div>
-            <p className="mt-2">Benefits include: tax-free stipend, full tuition coverage, conference travel allowance (especially at MacDiarmid), research expense funds, and access to world-class facilities. NZ cost of living is lower than Australia, making the effective purchasing power higher.</p>
+            <p className="mt-2">No tuition fees anywhere in Germany! Benefits include: stipend/salary, no tuition, health insurance coverage, conference travel allowance (especially at Max Planck Institutes), research expense funds, and access to world-class facilities. Germany cost of living is moderate compared to other European countries.</p>
           </div>
         </CardContent>
       </Card>
@@ -298,15 +301,15 @@ export default function ManaakiNZGuideTab() {
           <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-3">❓ FAQ</h3>
           <Accordion type="single" collapsible>
             {[
-              { q: 'How do I apply for Manaaki NZ Scholarship from Nepal?', a: 'Apply through the Manaaki NZ online portal (manaaki.nz). The NZ High Commission in Kathmandu manages the application process for Nepali students. Applications typically open in February and close in April each year. You need IELTS 6.5+, a strong academic record, and a research proposal.' },
-              { q: 'What IELTS score do I need for NZ PhD?', a: 'All NZ universities require IELTS 6.5 overall with no band below 6.0. Manaaki NZ Scholarship also requires minimum 6.5 with no band below 6.0. Take IELTS through IDP Nepal or British Council Nepal in Kathmandu. Score is valid for 2 years. Some universities also accept TOEFL iBT 90+ or PTE Academic 58+.' },
-              { q: 'Can I apply for both Manaaki NZ and university doctoral scholarship?', a: 'Yes! Manaaki NZ is a separate, fully-funded scholarship from the NZ Government specifically for developing countries including Nepal. University doctoral scholarships are available at all 8 NZ universities. If you get Manaaki NZ, it covers everything. If not, you can still get university doctoral funding. Apply for both!' },
-              { q: 'How long does NZ student visa processing take from Nepal?', a: 'Typically 4-8 weeks after submitting your online application through Immigration New Zealand. You need an offer of place from a NZ university and must show financial capacity (or Manaaki NZ scholarship letter). Apply online at immigration.govt.nz. Biometrics may be required at VFS Global Kathmandu.' },
-              { q: 'What is the MacDiarmid Institute?', a: 'The MacDiarmid Institute for Advanced Materials and Nanotechnology is NZ\'s premier Centre of Research Excellence for physics and materials science. It spans 5 universities (Auckland, VUW, Otago, Massey, Waikato). Students are enrolled at a node university but are part of the wider MacDiarmid research community with access to shared facilities, conference travel funds, and additional stipend top-ups.' },
-              { q: 'Can I bring my spouse to New Zealand?', a: 'Yes! On a dependent visa, your spouse can work in New Zealand full-time. You need to show sufficient funds for living expenses. Each dependent needs their own visa application. NZ is very family-friendly and your spouse can work in most occupations.' },
-              { q: 'Is health insurance mandatory in NZ?', a: 'Yes, health and travel insurance is mandatory for the entire duration of your visa. Manaaki NZ Scholarship covers health insurance. For university-funded students, you must purchase insurance (approx. NZD $500-700/year). Most universities arrange this during enrollment.' },
-              { q: 'How competitive are NZ PhD positions for Nepali students?', a: 'Very achievable! Manaaki NZ specifically targets developing countries including Nepal, making it more accessible than many European scholarships. University doctoral scholarships are widely available for international students. Strong MSc from TU with good grades and IELTS score makes you competitive. NZ is smaller than Australia, so less competition overall.' },
-              { q: 'What is GNS Science?', a: 'GNS Science is NZ\'s premier research institute for geophysics, seismology, volcanology, and nuclear/isotope physics. Students are co-enrolled at partner universities (mainly VUW) but conduct research at GNS facilities in Lower Hutt, Wellington. GNS offers its own PhD scholarships (NZD $28,000/year). Ideal for Nepali students interested in geophysics and earth sciences.' },
+              { q: 'How do I apply for DAAD scholarship from Nepal?', a: 'Apply through the DAAD online portal (daad.de). The DAAD Information Centre in Kathmandu can assist with queries. Applications typically have a deadline in November each year for the following academic year. You need IELTS 6.0+, a strong academic record, a detailed research proposal, and a letter of acceptance from a German professor (Betreuer).' },
+              { q: 'What IELTS score do I need for German PhD?', a: 'DAAD requires minimum IELTS 6.0, but many German universities prefer 6.5. Requirements vary by university and program. Take IELTS through IDP Nepal or British Council Nepal in Kathmandu. Score is valid for 2 years. Some universities also accept TOEFL iBT 80+ or Cambridge certificates.' },
+              { q: 'Can I apply for both DAAD and university position?', a: 'Yes! DAAD is a separate scholarship from the German Government. University positions (TV-L E13) are employment contracts from individual universities or research institutes. If you get DAAD, it covers your stipend and insurance. If not, you can still apply for TV-L E13 positions directly with professors. Apply for both to maximize your chances!' },
+              { q: 'How long does German student visa processing take from Nepal?', a: 'Typically 4-8 weeks after submitting your application at the German Embassy in Kathmandu. You need an admission letter from a German university and proof of funding (DAAD scholarship letter or blocked account with €11,208). Schedule your embassy appointment early as slots fill up quickly during peak season.' },
+              { q: 'What are Max Planck Institutes?', a: 'Max Planck Institutes (MPIs) are Germany\'s premier research organizations, comparable to the best research institutes worldwide. They focus on fundamental research across all scientific disciplines. For physics, notable ones include MPI for Physics (Munich), MPI for Solid State Research (Stuttgart), MPI for the Structure and Dynamics of Matter (Hamburg), and MPI for Gravitational Physics (Potsdam). PhD students at MPIs are typically paid at TV-L E13 75-100% (€2,138-2,850/month) and are co-enrolled at partner universities.' },
+              { q: 'Can I bring my spouse to Germany?', a: 'Yes! On a family reunification visa, your spouse can join you in Germany. If you have a TV-L E13 position, your spouse is allowed to work full-time. If you are on a DAAD scholarship, your spouse may need to apply for a residence permit separately and work permission depends on their qualifications. Germany is generally family-friendly for international researchers.' },
+              { q: 'Is health insurance mandatory in Germany?', a: 'Yes, health insurance is absolutely mandatory in Germany for everyone, including international students. DAAD scholarship holders receive health insurance coverage as part of their scholarship. For TV-L E13 positions, health insurance is included in your employment contract. For self-funded students, public health insurance costs approximately €110-120/month. You cannot enroll at a university or get a residence permit without proof of health insurance.' },
+              { q: 'How competitive are German PhD positions for Nepali students?', a: 'Very achievable! Germany has one of the largest numbers of international PhD positions in the world, and there is a strong culture of welcoming international researchers. DAAD specifically supports students from developing countries including Nepal. TV-L E13 positions are widely available across 100+ universities and research institutes. Strong MSc from TU with good grades, IELTS score, and a compelling research proposal makes you competitive.' },
+              { q: 'What is the TV-L E13 salary?', a: 'TV-L E13 is the collective bargaining pay scale for research assistants at German universities and public research institutes. It has different percentage levels: 50% (~€1,500/month), 65% (~€1,950/month), 75% (~€2,138/month), and 100% (~€2,850/month). For PhD students, 65-75% is most common. The salary is subject to taxes and social insurance contributions, but you receive pension benefits and full employee rights. Max Planck Institutes typically offer 75-100% positions.' },
             ].map((faq, i) => (
               <AccordionItem key={i} value={`faq-${i}`}>
                 <AccordionTrigger className="text-sm text-left">{faq.q}</AccordionTrigger>

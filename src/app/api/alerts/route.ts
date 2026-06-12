@@ -15,12 +15,12 @@ export async function GET() {
     contractType: string
     languageInstruction: string
     englishLabLife: boolean
-    monthlyGbp: number | null
+    monthlyEur: number | null
     fields: string
   }> = []
 
   institutions.forEach((inst) => {
-    if (inst.deadline && inst.deadline !== 'Rolling' && inst.deadline !== 'Varies') {
+    if (inst.deadline && inst.deadline !== 'Rolling' && inst.deadline !== 'Rolling admissions' && inst.deadline !== 'Varies') {
       const deadlineDate = new Date(inst.deadline)
       const daysLeft = Math.ceil((deadlineDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24))
       if (daysLeft > 0 && daysLeft < 365) {
@@ -35,11 +35,11 @@ export async function GET() {
           contractType: inst.contractType,
           languageInstruction: inst.languageInstruction,
           englishLabLife: inst.englishLabLife,
-          monthlyGbp: inst.monthlyGbp,
+          monthlyEur: inst.monthlyEur,
           fields: inst.fields,
         })
       }
-    } else if (inst.deadline === 'Rolling') {
+    } else if (inst.deadline === 'Rolling' || inst.deadline === 'Rolling admissions') {
       // Rolling admission — mark as safe
       alerts.push({
         id: inst.id,
@@ -52,7 +52,7 @@ export async function GET() {
         contractType: inst.contractType,
         languageInstruction: inst.languageInstruction,
         englishLabLife: inst.englishLabLife,
-        monthlyGbp: inst.monthlyGbp,
+        monthlyEur: inst.monthlyEur,
         fields: inst.fields,
       })
     }

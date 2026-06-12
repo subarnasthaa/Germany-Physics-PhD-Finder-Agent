@@ -14,19 +14,19 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "New Zealand Physics PhD Finder - For Nepali Students",
-  description: "Comprehensive guide for Nepali MSc Physics students from Tribhuvan University to find PhD programs in New Zealand. Explore all 8 NZ universities, MacDiarmid Institute, GNS Science, Manaaki NZ Scholarship, doctoral funding, and get AI-powered assistance.",
-  keywords: ["New Zealand", "PhD", "Physics", "Manaaki NZ", "MacDiarmid Institute", "GNS Science", "NZ universities", "Nepal", "Tribhuvan University", "study in New Zealand", "IELTS", "doctoral scholarship"],
-  authors: [{ name: "New Zealand Physics PhD Finder" }],
+  title: "Germany Physics PhD Finder - For Nepali Students",
+  description: "Comprehensive guide for Nepali MSc Physics students from Tribhuvan University to find PhD programs in Germany. Explore TU9 universities, Max Planck Institutes, Helmholtz Centres, DAAD scholarships, TV-L E13 positions, and get AI-powered assistance.",
+  keywords: ["Germany", "PhD", "Physics", "DAAD", "Max Planck", "Helmholtz", "TU9", "German universities", "Nepal", "Tribhuvan University", "study in Germany", "IELTS", "doctoral scholarship", "TV-L E13"],
+  authors: [{ name: "Germany Physics PhD Finder" }],
   openGraph: {
-    title: "New Zealand Physics PhD Finder",
-    description: "Find your Physics PhD in New Zealand - Guide for Nepali Physics students with Manaaki NZ, MacDiarmid, GNS",
+    title: "Germany Physics PhD Finder",
+    description: "Find your Physics PhD in Germany - Guide for Nepali Physics students with DAAD, Max Planck, Helmholtz",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "New Zealand Physics PhD Finder",
-    description: "Find your Physics PhD in New Zealand - Guide for Nepali Physics students with Manaaki NZ, MacDiarmid, GNS",
+    title: "Germany Physics PhD Finder",
+    description: "Find your Physics PhD in Germany - Guide for Nepali Physics students with DAAD, Max Planck, Helmholtz",
   },
 };
 

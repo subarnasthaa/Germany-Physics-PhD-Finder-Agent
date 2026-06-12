@@ -86,33 +86,33 @@ const PROVIDERS = [
 
 const suggestedPrompts = [
   {
-    label: 'Best NZ universities for physics PhD',
+    label: 'Best German universities for physics PhD',
     icon: BookOpen,
-    prompt: 'What are the best New Zealand universities for physics PhD for a Nepali student? Compare Auckland, VUW, Otago, and Canterbury.',
+    prompt: 'What are the best German universities for physics PhD for a Nepali student? Compare TUM, LMU, Heidelberg, and RWTH Aachen.',
   },
   {
-    label: 'Manaaki NZ Scholarship guide',
+    label: 'DAAD Scholarship guide',
     icon: Award,
-    prompt: 'How can Nepali students get Manaaki New Zealand Scholarship for a PhD in physics? Walk me through the application process and requirements.',
+    prompt: 'How can Nepali students get DAAD scholarship for a PhD in physics in Germany? Walk me through the application process and requirements.',
   },
   {
-    label: 'Doctoral scholarship funding',
+    label: 'TV-L E13 salary & funding',
     icon: FileText,
-    prompt: 'What is the doctoral stipend and how much do PhD students get in New Zealand? How does MacDiarmid top-up work?',
+    prompt: 'What is the TV-L E13 salary and how much do PhD students get in Germany? Explain MPI positions vs university positions.',
   },
   {
-    label: 'About MacDiarmid & GNS',
+    label: 'About Max Planck & Helmholtz',
     icon: Globe,
-    prompt: 'Tell me about MacDiarmid Institute and GNS Science PhD programs for physics students. How do the scholarships work?',
+    prompt: 'Tell me about Max Planck Institutes and Helmholtz Centres PhD programs for physics students. How do the positions and funding work?',
   },
   {
     label: 'IELTS requirements & tips',
     icon: HelpCircle,
-    prompt: 'What IELTS score do I need for NZ PhD programs in physics? Give me the requirements and tips for Nepali students.',
+    prompt: 'What IELTS score do I need for German PhD programs in physics? Give me the requirements and tips for Nepali students.',
   },
 ]
 
-const STORAGE_KEY = 'nz-phd-finder-ai-settings'
+const STORAGE_KEY = 'de-phd-finder-ai-settings'
 
 function loadSettings(): AISettings | null {
   if (typeof window === 'undefined') return null
@@ -299,8 +299,8 @@ export default function AgentChatTab({ watchlistedIds }: AgentChatTabProps) {
             {/* Settings Header */}
             <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
               <div className="flex items-center gap-3">
-                <div className="size-10 rounded-xl bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center">
-                  <Settings className="size-5 text-indigo-600 dark:text-indigo-400" />
+                <div className="size-10 rounded-xl bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
+                  <Settings className="size-5 text-red-600 dark:text-red-400" />
                 </div>
                 <div>
                   <h3 className="text-lg font-bold text-gray-900 dark:text-white">AI Settings</h3>
@@ -336,7 +336,7 @@ export default function AgentChatTab({ watchlistedIds }: AgentChatTabProps) {
                       onClick={() => handleProviderChange(p.id)}
                       className={`flex items-center gap-3 p-3 rounded-lg border-2 transition-all text-left ${
                         settingsForm.provider === p.id
-                          ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-950/20'
+                          ? 'border-red-500 bg-red-50 dark:bg-red-950/20'
                           : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
                       }`}
                     >
@@ -346,7 +346,7 @@ export default function AgentChatTab({ watchlistedIds }: AgentChatTabProps) {
                         <div className="text-xs text-gray-500 dark:text-gray-400">{p.description}</div>
                       </div>
                       {settingsForm.provider === p.id && (
-                        <Check className="size-4 text-indigo-600 shrink-0" />
+                        <Check className="size-4 text-red-600 shrink-0" />
                       )}
                     </button>
                   ))}
@@ -364,7 +364,7 @@ export default function AgentChatTab({ watchlistedIds }: AgentChatTabProps) {
                     value={settingsForm.apiKey}
                     onChange={(e) => setSettingsForm((prev) => ({ ...prev, apiKey: e.target.value }))}
                     placeholder="Enter your API key..."
-                    className="w-full h-10 px-4 pr-10 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-sm text-gray-900 dark:text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full h-10 px-4 pr-10 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-sm text-gray-900 dark:text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
                   />
                   <button
                     type="button"
@@ -379,7 +379,7 @@ export default function AgentChatTab({ watchlistedIds }: AgentChatTabProps) {
                     href={currentProvider.getApiKeyUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-block mt-1.5 text-xs text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 hover:underline"
+                    className="inline-block mt-1.5 text-xs text-red-600 hover:text-red-700 dark:text-red-400 hover:underline"
                   >
                     Get {currentProvider.name} API Key →
                   </a>
@@ -397,7 +397,7 @@ export default function AgentChatTab({ watchlistedIds }: AgentChatTabProps) {
                     value={settingsForm.model}
                     onChange={(e) => setSettingsForm((prev) => ({ ...prev, model: e.target.value }))}
                     placeholder={currentProvider?.defaultModel}
-                    className="w-full h-10 px-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-sm text-gray-900 dark:text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full h-10 px-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-sm text-gray-900 dark:text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
                   />
                 </div>
               )}
@@ -413,14 +413,14 @@ export default function AgentChatTab({ watchlistedIds }: AgentChatTabProps) {
                     value={settingsForm.baseUrl}
                     onChange={(e) => setSettingsForm((prev) => ({ ...prev, baseUrl: e.target.value }))}
                     placeholder="https://api.openai.com/v1"
-                    className="w-full h-10 px-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-sm text-gray-900 dark:text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full h-10 px-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-sm text-gray-900 dark:text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
                   />
                 </div>
               )}
 
               {/* Recommendation box */}
-              <div className="p-3 rounded-lg bg-indigo-50 dark:bg-indigo-950/20 border border-indigo-200 dark:border-indigo-800">
-                <p className="text-xs text-indigo-700 dark:text-indigo-300">
+              <div className="p-3 rounded-lg bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800">
+                <p className="text-xs text-red-700 dark:text-red-300">
                   <strong>💡 Recommended:</strong> Google Gemini offers a generous free tier perfect for this app.
                   Get your free API key at{' '}
                   <a
@@ -453,7 +453,7 @@ export default function AgentChatTab({ watchlistedIds }: AgentChatTabProps) {
                 <button
                   onClick={handleSaveSettings}
                   disabled={!settingsForm.apiKey.trim()}
-                  className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium bg-indigo-700 hover:bg-indigo-800 text-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium bg-red-700 hover:bg-red-800 text-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 >
                   {settingsSaved ? (
                     <>
@@ -475,14 +475,14 @@ export default function AgentChatTab({ watchlistedIds }: AgentChatTabProps) {
         {/* Welcome Message */}
         {messages.length === 0 && (
           <div className="flex flex-col items-center justify-center h-full text-center py-8">
-            <div className="size-16 rounded-2xl bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center mb-4">
-              <Bot className="size-8 text-indigo-600 dark:text-indigo-400" />
+            <div className="size-16 rounded-2xl bg-red-100 dark:bg-red-900/30 flex items-center justify-center mb-4">
+              <Bot className="size-8 text-red-600 dark:text-red-400" />
             </div>
             <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1">
-              New Zealand Physics PhD Finder Agent
+              Germany Physics PhD Finder Agent
             </h3>
             <p className="text-sm text-gray-500 dark:text-gray-400 max-w-md mb-2">
-              I can help you find the best PhD programs in New Zealand, explain Manaaki NZ & doctoral scholarships, MacDiarmid/GNS, and guide you through the application process.
+              I can help you find the best PhD programs in Germany, explain DAAD & TV-L E13 funding, Max Planck/Helmholtz positions, and guide you through the application process.
             </p>
 
             {/* API Key Status */}
@@ -490,7 +490,7 @@ export default function AgentChatTab({ watchlistedIds }: AgentChatTabProps) {
               <div className="mb-6 max-w-md">
                 <button
                   onClick={() => setShowSettings(true)}
-                  className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-indigo-700 hover:bg-indigo-800 text-white text-sm font-medium transition-colors mx-auto"
+                  className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-red-700 hover:bg-red-800 text-white text-sm font-medium transition-colors mx-auto"
                 >
                   <Settings className="size-4" />
                   Configure AI API Key (Free)
@@ -515,9 +515,9 @@ export default function AgentChatTab({ watchlistedIds }: AgentChatTabProps) {
                     key={suggestion.label}
                     onClick={() => handleSuggestedPrompt(suggestion.prompt)}
                     disabled={loading || !settings?.apiKey}
-                    className="flex items-center gap-2 p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-indigo-300 dark:hover:border-indigo-700 hover:bg-indigo-50 dark:hover:bg-indigo-950/20 transition-colors text-left disabled:opacity-50"
+                    className="flex items-center gap-2 p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-red-300 dark:hover:border-red-700 hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors text-left disabled:opacity-50"
                   >
-                    <Icon className="size-4 text-indigo-600 shrink-0" />
+                    <Icon className="size-4 text-red-600 shrink-0" />
                     <span className="text-xs font-medium text-gray-700 dark:text-gray-300">{suggestion.label}</span>
                   </button>
                 )
@@ -533,19 +533,19 @@ export default function AgentChatTab({ watchlistedIds }: AgentChatTabProps) {
             className={`flex gap-3 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
           >
             {message.role === 'assistant' && (
-              <div className="size-8 rounded-full bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center shrink-0">
-                <Bot className="size-4 text-indigo-600 dark:text-indigo-400" />
+              <div className="size-8 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center shrink-0">
+                <Bot className="size-4 text-red-600 dark:text-red-400" />
               </div>
             )}
             <div
               className={`max-w-[80%] sm:max-w-[70%] rounded-2xl px-4 py-3 ${
                 message.role === 'user'
-                  ? 'bg-indigo-700 text-white rounded-br-md'
+                  ? 'bg-red-700 text-white rounded-br-md'
                   : 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-bl-md'
               }`}
             >
               <p className="text-sm whitespace-pre-wrap leading-relaxed">{message.content}</p>
-              <div className={`text-xs mt-1 ${message.role === 'user' ? 'text-indigo-200' : 'text-gray-400 dark:text-gray-500'}`}>
+              <div className={`text-xs mt-1 ${message.role === 'user' ? 'text-red-200' : 'text-gray-400 dark:text-gray-500'}`}>
                 {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
               </div>
             </div>
@@ -560,14 +560,14 @@ export default function AgentChatTab({ watchlistedIds }: AgentChatTabProps) {
         {/* Loading Indicator */}
         {loading && (
           <div className="flex gap-3 justify-start">
-            <div className="size-8 rounded-full bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center shrink-0">
-              <Bot className="size-4 text-indigo-600 dark:text-indigo-400" />
+            <div className="size-8 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center shrink-0">
+              <Bot className="size-4 text-red-600 dark:text-red-400" />
             </div>
             <Card className="bg-gray-100 dark:bg-gray-800 rounded-2xl rounded-bl-md">
               <CardContent className="p-4">
                 <div className="flex items-center gap-2">
-                  <Loader2 className="size-4 text-indigo-600 animate-spin" />
-                  <Sparkles className="size-4 text-indigo-500" />
+                  <Loader2 className="size-4 text-red-600 animate-spin" />
+                  <Sparkles className="size-4 text-red-500" />
                   <span className="text-sm text-gray-600 dark:text-gray-400">Thinking...</span>
                 </div>
               </CardContent>
@@ -586,9 +586,9 @@ export default function AgentChatTab({ watchlistedIds }: AgentChatTabProps) {
               <button
                 key={suggestion.label}
                 onClick={() => handleSuggestedPrompt(suggestion.prompt)}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-gray-200 dark:border-gray-700 hover:border-indigo-300 dark:hover:border-indigo-700 hover:bg-indigo-50 dark:hover:bg-indigo-950/20 transition-colors whitespace-nowrap text-xs text-gray-600 dark:text-gray-400"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-gray-200 dark:border-gray-700 hover:border-red-300 dark:hover:border-red-700 hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors whitespace-nowrap text-xs text-gray-600 dark:text-gray-400"
               >
-                <Sparkles className="size-3 text-indigo-500" />
+                <Sparkles className="size-3 text-red-500" />
                 {suggestion.label}
               </button>
             ))}
@@ -607,7 +607,7 @@ export default function AgentChatTab({ watchlistedIds }: AgentChatTabProps) {
             </p>
             <button
               onClick={() => setShowSettings(true)}
-              className="text-xs font-medium text-indigo-600 hover:text-indigo-700 dark:text-indigo-400"
+              className="text-xs font-medium text-red-600 hover:text-red-700 dark:text-red-400"
             >
               Setup →
             </button>
@@ -621,16 +621,16 @@ export default function AgentChatTab({ watchlistedIds }: AgentChatTabProps) {
             onChange={(e) => setInput(e.target.value)}
             placeholder={
               settings?.apiKey
-                ? 'Ask about PhD programs, Manaaki NZ, MacDiarmid, IELTS...'
+                ? 'Ask about PhD programs, DAAD, Max Planck, IELTS...'
                 : 'Configure API key to start chatting...'
             }
             disabled={loading || !settings?.apiKey}
-            className="flex-1 h-10 px-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-sm text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent disabled:opacity-50"
+            className="flex-1 h-10 px-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-sm text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent disabled:opacity-50"
           />
           <Button
             type="submit"
             disabled={loading || !input.trim() || !settings?.apiKey}
-            className="bg-indigo-700 hover:bg-indigo-800 text-white h-10 px-4"
+            className="bg-red-700 hover:bg-red-800 text-white h-10 px-4"
           >
             {loading ? (
               <Loader2 className="size-4 animate-spin" />
