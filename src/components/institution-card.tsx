@@ -26,8 +26,8 @@ export default function InstitutionCard({ institution, isWatchlisted, onToggleWa
   const [expanded, setExpanded] = useState(false)
 
   const typeColor = institution.type === 'Research Institute'
-    ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
-    : 'bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-400'
+    ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400'
+    : 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-400'
 
   const fieldsList = institution.fields.split('|').map((f) => f.trim()).filter(Boolean)
 
@@ -49,8 +49,8 @@ export default function InstitutionCard({ institution, isWatchlisted, onToggleWa
             onClick={onToggleWatchlist}
             className={`shrink-0 p-1 rounded transition-colors ${
               isWatchlisted
-                ? 'text-teal-500 hover:text-teal-600'
-                : 'text-gray-300 dark:text-gray-600 hover:text-teal-400'
+                ? 'text-indigo-500 hover:text-indigo-600'
+                : 'text-gray-300 dark:text-gray-600 hover:text-indigo-400'
             }`}
           >
             <Star className={`size-5 ${isWatchlisted ? 'fill-current' : ''}`} />
@@ -60,21 +60,21 @@ export default function InstitutionCard({ institution, isWatchlisted, onToggleWa
         {/* Badges */}
         <div className="flex flex-wrap gap-1.5 mb-3">
           <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${typeColor}`}>
-            {institution.type === 'Research Institute' ? 'Research Lab' : institution.go8 ? 'Go8 University' : 'University'}
+            {institution.type === 'Research Institute' ? 'Research Institute' : institution.go8 ? 'Top NZ University' : 'University'}
           </span>
-          {institution.funding?.rtpAvailable && (
-            <Badge variant="secondary" className="text-xs bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">
-              RTP
-            </Badge>
-          )}
-          {institution.funding?.australiaAwardsEligible && (
-            <Badge variant="secondary" className="text-xs bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400">
-              Australia Awards
-            </Badge>
-          )}
-          {institution.funding?.csiroTopup && (
+          {institution.funding?.doctoralScholarshipAvailable && (
             <Badge variant="secondary" className="text-xs bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400">
-              CSIRO Top-up
+              Doctoral Scholarship
+            </Badge>
+          )}
+          {institution.funding?.manaakiNzEligible && (
+            <Badge variant="secondary" className="text-xs bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400">
+              Manaaki NZ
+            </Badge>
+          )}
+          {institution.funding?.macdiarmidNode && (
+            <Badge variant="secondary" className="text-xs bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-400">
+              MacDiarmid
             </Badge>
           )}
           <Badge variant="secondary" className="text-xs bg-sky-100 text-sky-700 dark:bg-sky-900/30 dark:text-sky-400">
@@ -97,15 +97,15 @@ export default function InstitutionCard({ institution, isWatchlisted, onToggleWa
         {/* Key Info */}
         <div className="space-y-1.5 text-xs text-gray-600 dark:text-gray-400">
           <div className="flex items-center gap-2">
-            <ClockIcon className="size-3.5 text-teal-500" />
+            <ClockIcon className="size-3.5 text-indigo-500" />
             <span>Deadline: {institution.deadline || 'Rolling'}</span>
           </div>
           <div className="flex items-center gap-2">
-            <Banknote className="size-3.5 text-green-500" />
-            <span>{institution.monthlyGbp ? `AUD $${institution.monthlyGbp.toLocaleString()}/month` : 'Stipend varies'}</span>
+            <Banknote className="size-3.5 text-purple-500" />
+            <span>{institution.monthlyGbp ? `NZD $${institution.monthlyGbp.toLocaleString()}/month` : 'Stipend varies'}</span>
           </div>
           <div className="flex items-center gap-2">
-            <Languages className="size-3.5 text-teal-500" />
+            <Languages className="size-3.5 text-indigo-500" />
             <span>{institution.languageInstruction}</span>
             {institution.englishLabLife && (
               <span className="text-green-600 dark:text-green-400">(lab life OK)</span>
@@ -116,7 +116,7 @@ export default function InstitutionCard({ institution, isWatchlisted, onToggleWa
         {/* Expand/Collapse */}
         <button
           onClick={() => setExpanded(!expanded)}
-          className="w-full mt-3 flex items-center justify-center gap-1 text-xs text-teal-600 hover:text-teal-700 dark:text-teal-400 transition-colors"
+          className="w-full mt-3 flex items-center justify-center gap-1 text-xs text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 transition-colors"
         >
           {expanded ? (
             <>Less details <ChevronUp className="size-3" /></>
@@ -131,7 +131,7 @@ export default function InstitutionCard({ institution, isWatchlisted, onToggleWa
             {institution.url && (
               <div className="flex items-start gap-2">
                 <Globe className="size-3.5 text-gray-400 mt-0.5 shrink-0" />
-                <a href={institution.url} target="_blank" rel="noopener noreferrer" className="text-xs text-teal-600 hover:underline break-all">
+                <a href={institution.url} target="_blank" rel="noopener noreferrer" className="text-xs text-indigo-600 hover:underline break-all">
                   {institution.url}
                 </a>
               </div>
@@ -160,10 +160,10 @@ export default function InstitutionCard({ institution, isWatchlisted, onToggleWa
                 <span className="text-gray-700 dark:text-gray-300">{institution.ieltsMinimum}</span>
               </div>
             )}
-            {institution.internationalTuitionAud > 0 && (
+            {institution.internationalTuitionNzd > 0 && (
               <div className="text-xs">
                 <span className="text-gray-500">International Tuition:</span>{' '}
-                <span className="text-gray-700 dark:text-gray-300">AUD ${institution.internationalTuitionAud.toLocaleString()}/year</span>
+                <span className="text-gray-700 dark:text-gray-300">NZD ${institution.internationalTuitionNzd.toLocaleString()}/year</span>
               </div>
             )}
             {institution.admission && (
@@ -185,8 +185,8 @@ export default function InstitutionCard({ institution, isWatchlisted, onToggleWa
               </div>
             )}
             {institution.notesForNepali && (
-              <div className="p-2 rounded bg-teal-50 dark:bg-teal-950/20 border border-teal-200 dark:border-teal-800">
-                <p className="text-xs text-teal-700 dark:text-teal-300">
+              <div className="p-2 rounded bg-indigo-50 dark:bg-indigo-950/20 border border-indigo-200 dark:border-indigo-800">
+                <p className="text-xs text-indigo-700 dark:text-indigo-300">
                   🇳🇵 {institution.notesForNepali}
                 </p>
               </div>

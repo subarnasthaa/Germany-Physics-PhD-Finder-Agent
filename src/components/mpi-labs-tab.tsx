@@ -9,7 +9,7 @@ interface Institution {
   id: string
   name: string
   city: string
-  state: string
+  country: string
   type: string
   department: string
   researchGroup: string | null
@@ -56,26 +56,26 @@ export default function MPILabsTab({ onNavigate }: MPILabsTabProps) {
         inst.name.toLowerCase().includes(q) ||
         inst.city.toLowerCase().includes(q) ||
         inst.fields.toLowerCase().includes(q) ||
-        inst.state.toLowerCase().includes(q)
+        inst.country.toLowerCase().includes(q)
       )
     }
     return true
   })
 
   const typeColors: Record<string, string> = {
-    'Research Institute': 'from-green-600 to-teal-700',
+    'Research Institute': 'from-purple-600 to-indigo-700',
   }
   const typeBadgeColors: Record<string, string> = {
-    'Research Institute': 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400',
+    'Research Institute': 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400',
   }
   const typeLabels: Record<string, string> = {
-    'Research Institute': 'Research Lab',
+    'Research Institute': 'Research Institute',
   }
 
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <Loader2 className="size-8 text-teal-600 animate-spin" />
+        <Loader2 className="size-8 text-indigo-600 animate-spin" />
       </div>
     )
   }
@@ -83,13 +83,13 @@ export default function MPILabsTab({ onNavigate }: MPILabsTabProps) {
   return (
     <div className="space-y-6 p-4 md:p-6">
       {/* Header */}
-      <Card className="border-0 bg-gradient-to-r from-teal-600 to-green-700 text-white overflow-hidden">
+      <Card className="border-0 bg-gradient-to-r from-indigo-600 to-purple-700 text-white overflow-hidden">
         <CardContent className="p-6 md:p-8">
-          <h2 className="text-2xl font-bold mb-1">🔬 CSIRO & ANSTO Research Laboratories</h2>
-          <p className="text-teal-100 text-sm max-w-xl">
-            Australia&apos;s world-renowned national research facilities — CSIRO (Commonwealth Scientific and Industrial Research Organisation)
-            and ANSTO (Australian Nuclear Science and Technology Organisation) offer excellent PhD opportunities with top-up scholarships!
-            Students are registered at partner universities while working at these world-class facilities!
+          <h2 className="text-2xl font-bold mb-1">🔬 MacDiarmid Institute & GNS Science</h2>
+          <p className="text-indigo-100 text-sm max-w-xl">
+            New Zealand&apos;s world-renowned national research facilities — the MacDiarmid Institute for Advanced Materials
+            and GNS Science offer excellent PhD opportunities with competitive scholarships!
+            Students are registered at partner universities while working at these world-class research centres!
           </p>
         </CardContent>
       </Card>
@@ -102,22 +102,22 @@ export default function MPILabsTab({ onNavigate }: MPILabsTabProps) {
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search labs, cities, fields..."
-            className="w-full h-10 pl-10 pr-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+            placeholder="Search institutes, cities, fields..."
+            className="w-full h-10 pl-10 pr-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
         </div>
       </div>
 
-      {/* Lab Cards */}
+      {/* Institute Cards */}
       {filtered.length > 0 && (
         <div>
           {/* Type Header */}
-          <div className="rounded-lg bg-gradient-to-r from-green-600 to-teal-700 text-white p-4 mb-3">
+          <div className="rounded-lg bg-gradient-to-r from-purple-600 to-indigo-700 text-white p-4 mb-3">
             <div className="flex items-center gap-3">
               <FlaskConical className="size-6" />
               <div>
-                <h3 className="text-lg font-bold">CSIRO Divisions & ANSTO</h3>
-                <p className="text-sm opacity-80">{filtered.length} labs found</p>
+                <h3 className="text-lg font-bold">MacDiarmid Institute & GNS Science</h3>
+                <p className="text-sm opacity-80">{filtered.length} institutes found</p>
               </div>
             </div>
           </div>
@@ -137,7 +137,7 @@ export default function MPILabsTab({ onNavigate }: MPILabsTabProps) {
                       </span>
                       <div className="flex-1 min-w-0">
                         <h4 className="text-sm font-bold text-gray-900 dark:text-white mb-1">{inst.name}</h4>
-                        <p className="text-xs text-gray-500">{inst.city}, {inst.state}</p>
+                        <p className="text-xs text-gray-500">{inst.city}, {inst.country}</p>
                       </div>
                     </div>
 
@@ -153,7 +153,7 @@ export default function MPILabsTab({ onNavigate }: MPILabsTabProps) {
                     <div className="mt-2 flex items-center gap-3 text-xs text-gray-500">
                       <span className="flex items-center gap-1">
                         <Banknote className="size-3" />
-                        {inst.monthlyGbp ? `AUD $${inst.monthlyGbp.toLocaleString()}/mo` : 'Varies'}
+                        {inst.monthlyGbp ? `NZD $${inst.monthlyGbp.toLocaleString()}/mo` : 'Varies'}
                       </span>
                       <span>{inst.languageInstruction}</span>
                       {inst.englishLabLife && (
@@ -165,7 +165,7 @@ export default function MPILabsTab({ onNavigate }: MPILabsTabProps) {
 
                     <button
                       onClick={() => setExpandedId(isExpanded ? null : inst.id)}
-                      className="w-full mt-2 flex items-center justify-center gap-1 text-xs text-teal-600 hover:text-teal-700"
+                      className="w-full mt-2 flex items-center justify-center gap-1 text-xs text-indigo-600 hover:text-indigo-700"
                     >
                       {isExpanded ? <ChevronUp className="size-3" /> : <ChevronDown className="size-3" />}
                       {isExpanded ? 'Less' : 'Details'}
@@ -174,7 +174,7 @@ export default function MPILabsTab({ onNavigate }: MPILabsTabProps) {
                     {isExpanded && (
                       <div className="mt-2 pt-2 border-t border-gray-200 dark:border-gray-700 space-y-1.5 text-xs">
                         {inst.url && (
-                          <a href={inst.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-teal-600 hover:underline">
+                          <a href={inst.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-indigo-600 hover:underline">
                             <Globe className="size-3" /> {inst.url}
                           </a>
                         )}
@@ -184,7 +184,7 @@ export default function MPILabsTab({ onNavigate }: MPILabsTabProps) {
                         {inst.deadline && <p><span className="text-gray-500">Deadline:</span> {inst.deadline}</p>}
                         {inst.notableProfessors && <p><span className="text-gray-500">Notable:</span> {inst.notableProfessors}</p>}
                         {inst.notesForNepali && (
-                          <p className="p-1.5 rounded bg-teal-50 dark:bg-teal-950/20 text-teal-700 dark:text-teal-300">
+                          <p className="p-1.5 rounded bg-indigo-50 dark:bg-indigo-950/20 text-indigo-700 dark:text-indigo-300">
                             🇳🇵 {inst.notesForNepali}
                           </p>
                         )}
@@ -201,29 +201,30 @@ export default function MPILabsTab({ onNavigate }: MPILabsTabProps) {
       {filtered.length === 0 && (
         <div className="text-center py-12">
           <Atom className="size-12 text-gray-300 dark:text-gray-600 mx-auto mb-3" />
-          <p className="text-gray-500 dark:text-gray-400">No research labs match your search</p>
+          <p className="text-gray-500 dark:text-gray-400">No research institutes match your search</p>
         </div>
       )}
 
-      {/* CSIRO/ANSTO Info Card */}
-      <Card className="border-teal-200 dark:border-teal-800/50">
+      {/* MacDiarmid & GNS Info Card */}
+      <Card className="border-indigo-200 dark:border-indigo-800/50">
         <CardContent className="p-4 md:p-6">
           <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
-            <Atom className="size-4 text-teal-600" />
-            About CSIRO & ANSTO Studentships
+            <Atom className="size-4 text-indigo-600" />
+            About MacDiarmid Institute & GNS Science
           </h3>
           <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
-            CSIRO (Commonwealth Scientific and Industrial Research Organisation) is Australia&apos;s national science agency,
-            offering PhD top-up scholarships of AUD $7,000-10,000/year on top of the university RTP stipend across its divisions
-            including Astronomy & Space Science, Energy, Manufacturing, Data61, Oceans & Atmosphere, and Mineral Resources.
-            Students are registered at partner universities (ANU, Melbourne, UNSW, UQ, etc.) but conduct their research at CSIRO facilities.
-            ANSTO (Australian Nuclear Science and Technology Organisation) operates the OPAL research reactor and the Australian Centre
-            for Neutron Scattering, offering similar postgraduate scholarships. Both provide access to world-class facilities
-            and direct industry research experience.
+            The MacDiarmid Institute for Advanced Materials and Nanotechnology is New Zealand&apos;s Centre of Research Excellence,
+            spanning 5 universities (Auckland, VUW, Otago, Massey, Waikato). Students are enrolled at node universities but part of the
+            wider MacDiarmid research community with access to shared facilities, conference travel funds (NZD $3,000/year),
+            and research expense budgets. PhD scholarships are NZD $27,000/year with additional top-ups available.
+            GNS Science is NZ&apos;s premier geophysics and nuclear research institute, operating the National Isotope Centre.
+            Students co-enrolled at partner universities (mainly VUW) conduct research at GNS facilities in Lower Hutt.
+            GNS PhD scholarships are NZD $28,000/year. Callaghan Innovation also offers applied physics PhD positions
+            with industry connections and NZD $27,500/year stipends.
           </p>
           <button
             onClick={() => onNavigate('universities')}
-            className="mt-3 text-xs text-teal-600 hover:text-teal-700 font-medium"
+            className="mt-3 text-xs text-indigo-600 hover:text-indigo-700 font-medium"
           >
             Browse all institutions →
           </button>

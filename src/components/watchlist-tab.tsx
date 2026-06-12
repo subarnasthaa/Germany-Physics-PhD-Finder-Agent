@@ -21,9 +21,9 @@ interface Institution {
   languageInstruction: string
   englishLabLife: boolean
   funding: {
-    rtpAvailable: boolean
-    australiaAwardsEligible: boolean
-    csiroTopup: boolean
+    doctoralScholarshipAvailable: boolean
+    manaakiNzEligible: boolean
+    macdiarmidNode: boolean
     universityScholarships: boolean
   }
   go8: boolean
@@ -64,7 +64,7 @@ export default function WatchlistTab({ watchlistedIds, toggleWatchlist, onNaviga
         <p className="text-sm text-gray-500 dark:text-gray-400 mb-4 text-center">
           Star institutions you&apos;re interested in to track their deadlines and funding info
         </p>
-        <Button onClick={() => onNavigate('universities')} className="bg-teal-600 hover:bg-teal-700 text-white">
+        <Button onClick={() => onNavigate('universities')} className="bg-indigo-600 hover:bg-indigo-700 text-white">
           Browse Institutions
         </Button>
       </div>
@@ -94,10 +94,10 @@ export default function WatchlistTab({ watchlistedIds, toggleWatchlist, onNaviga
       <div className="grid gap-4 md:grid-cols-2">
         {filtered.map((inst) => {
           const typeColor = inst.type === 'Research Institute'
-            ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
+            ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400'
             : inst.go8
-            ? 'bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-400'
-            : 'bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-400'
+            ? 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-400'
+            : 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-400'
 
           return (
             <Card key={inst.id} className="hover:shadow-md transition-shadow">
@@ -112,7 +112,7 @@ export default function WatchlistTab({ watchlistedIds, toggleWatchlist, onNaviga
                   </div>
                   <button
                     onClick={() => toggleWatchlist(inst.id)}
-                    className="p-1.5 rounded text-teal-500 hover:bg-teal-50 dark:hover:bg-teal-950/20 transition-colors"
+                    className="p-1.5 rounded text-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-950/20 transition-colors"
                   >
                     <Trash2 className="size-4" />
                   </button>
@@ -120,16 +120,21 @@ export default function WatchlistTab({ watchlistedIds, toggleWatchlist, onNaviga
 
                 <div className="flex flex-wrap gap-1.5 mb-3">
                   <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${typeColor}`}>
-                    {inst.type === 'Research Institute' ? 'Research Lab' : inst.go8 ? 'Go8' : 'University'}
+                    {inst.type === 'Research Institute' ? 'Research Institute' : inst.go8 ? 'Top NZ Uni' : 'University'}
                   </span>
-                  {inst.funding?.rtpAvailable && (
-                    <Badge variant="secondary" className="text-xs bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">
-                      RTP
+                  {inst.funding?.doctoralScholarshipAvailable && (
+                    <Badge variant="secondary" className="text-xs bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400">
+                      Doctoral
                     </Badge>
                   )}
-                  {inst.funding?.australiaAwardsEligible && (
+                  {inst.funding?.manaakiNzEligible && (
                     <Badge variant="secondary" className="text-xs bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400">
-                      Australia Awards
+                      Manaaki NZ
+                    </Badge>
+                  )}
+                  {inst.funding?.macdiarmidNode && (
+                    <Badge variant="secondary" className="text-xs bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-400">
+                      MacDiarmid
                     </Badge>
                   )}
                   <Badge variant="secondary" className="text-xs bg-sky-100 text-sky-700 dark:bg-sky-900/30 dark:text-sky-400">
@@ -139,11 +144,11 @@ export default function WatchlistTab({ watchlistedIds, toggleWatchlist, onNaviga
 
                 <div className="space-y-1.5 text-xs text-gray-600 dark:text-gray-400">
                   <div className="flex items-center gap-2">
-                    <Banknote className="size-3.5 text-green-500" />
-                    <span>{inst.monthlyGbp ? `AUD $${inst.monthlyGbp.toLocaleString()}/month` : 'Stipend varies'}</span>
+                    <Banknote className="size-3.5 text-purple-500" />
+                    <span>{inst.monthlyGbp ? `NZD $${inst.monthlyGbp.toLocaleString()}/month` : 'Stipend varies'}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Languages className="size-3.5 text-teal-500" />
+                    <Languages className="size-3.5 text-indigo-500" />
                     <span>{inst.languageInstruction}</span>
                   </div>
                   <p className="text-gray-500">Deadline: {inst.deadline || 'Rolling'}</p>

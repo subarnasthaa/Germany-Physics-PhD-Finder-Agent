@@ -14,19 +14,19 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Australia Physics PhD Finder - For Nepali Students",
-  description: "Comprehensive guide for Nepali MSc Physics students from Tribhuvan University to find PhD programs in Australia. Explore Group of Eight universities, CSIRO, ANSTO, Australia Awards, RTP funding, and get AI-powered assistance.",
-  keywords: ["Australia", "PhD", "Physics", "Australia Awards", "RTP", "CSIRO", "ANSTO", "Nepal", "Tribhuvan University", "Go8", "Australian universities", "study in Australia", "IELTS"],
-  authors: [{ name: "Australia Physics PhD Finder" }],
+  title: "New Zealand Physics PhD Finder - For Nepali Students",
+  description: "Comprehensive guide for Nepali MSc Physics students from Tribhuvan University to find PhD programs in New Zealand. Explore all 8 NZ universities, MacDiarmid Institute, GNS Science, Manaaki NZ Scholarship, doctoral funding, and get AI-powered assistance.",
+  keywords: ["New Zealand", "PhD", "Physics", "Manaaki NZ", "MacDiarmid Institute", "GNS Science", "NZ universities", "Nepal", "Tribhuvan University", "study in New Zealand", "IELTS", "doctoral scholarship"],
+  authors: [{ name: "New Zealand Physics PhD Finder" }],
   openGraph: {
-    title: "Australia Physics PhD Finder",
-    description: "Find your Physics PhD in Australia - Guide for Nepali Physics students with Australia Awards, RTP, CSIRO",
+    title: "New Zealand Physics PhD Finder",
+    description: "Find your Physics PhD in New Zealand - Guide for Nepali Physics students with Manaaki NZ, MacDiarmid, GNS",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Australia Physics PhD Finder",
-    description: "Find your Physics PhD in Australia - Guide for Nepali Physics students with Australia Awards, RTP, CSIRO",
+    title: "New Zealand Physics PhD Finder",
+    description: "Find your Physics PhD in New Zealand - Guide for Nepali Physics students with Manaaki NZ, MacDiarmid, GNS",
   },
 };
 
