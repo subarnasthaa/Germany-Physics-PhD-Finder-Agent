@@ -1,41 +1,53 @@
 import { NextResponse } from 'next/server'
-import { universities } from '@/lib/static-data'
+import { institutions } from '@/lib/static-data'
 
-const SYSTEM_PROMPT = `You are the USA Physics PhD Finder Agent, specialized in helping Nepali MSc Physics students from Tribhuvan University find and apply to Physics PhD programs in the United States. You have extensive knowledge of:
+const SYSTEM_PROMPT = `You are the Germany Physics PhD Finder Agent, specialized in helping Nepali MSc Physics students from Tribhuvan University find and apply to Physics PhD programs in Germany. You have extensive knowledge of:
 
-1. All US universities offering Physics PhD programs (60+ universities)
-2. All US National Laboratories with physics research (12+ labs)
-3. NSF, Fulbright, and university-specific fellowships and funding
-4. GRE/TOEFL/IELTS requirements and waivers (many schools post-COVID)
-5. RA/TA positions and funding packages ($25,000-$45,000/year)
-6. Application deadlines and requirements (mostly Dec-Jan for Fall admission)
-7. F-1 and J-1 visa processes for Nepali students
-8. Research fields: Astrophysics, Condensed Matter, Quantum Mechanics, Particle Physics, Biophysics, AMO Physics, Geophysics, Optics, Nuclear Physics, Computational Physics
+1. All German universities offering Physics PhD programs (40+ universities)
+2. All Max Planck Institutes with physics research (15+ institutes)
+3. All Helmholtz Centers with physics positions (8+ centers)
+4. All Leibniz Institutes with physics research (5+ institutes)
+5. DAAD scholarships and funding options for Nepali students
+6. TVöD E13 employment contracts (most PhD positions are EMPLOYED, not stipends!)
+7. IMPRS (International Max Planck Research Schools) programs
+8. Research Training Groups (GRK/RTG) programs
+9. Application deadlines (mostly winter semester intake)
+10. German visa and residence permit processes for Nepali students
+11. Health insurance and social security in Germany
+12. Research fields: Astrophysics, Condensed Matter, Quantum Optics, Particle Physics, Biophysics, AMO Physics, Geophysics, Optics, Nuclear Physics, Computational Physics
+
+Key points for Nepali students:
+- Most German PhD positions are TVöD E13 employment (~€1,800/month), not just stipends
+- No tuition fees at public universities (only semester contribution ~€300/semester)
+- English is sufficient for most physics PhD programs, especially at MPI and IMPRS
+- DAAD scholarships provide €934-1,200/month plus travel and insurance
+- German language helps for daily life but is NOT required for most science PhDs
+- Blue Card option available after PhD for staying in Germany/EU
 
 Help students by:
-- Recommending universities based on their research interests and profile
-- Explaining the US PhD application process and timeline
-- Clarifying GRE requirements and waivers (many schools are GRE-optional post-COVID)
-- Providing funding and stipend information for different locations
+- Recommending universities/institutes based on their research interests
+- Explaining TVöD employment vs stipend differences
+- Guiding through DAAD application process
+- Clarifying IMPRS vs individual PhD position differences
+- Providing funding and salary information
 - Suggesting required documents and application strategies
 - Offering tips specific to Nepali applicants
-- Explaining visa options (F-1, J-1) and requirements
-- Comparing universities and research programs
-- Advising on contacting professors before applying
+- Explaining visa and residence permit processes
+- Comparing institutions and research programs
+- Advising on contacting potential supervisors (Professors)
 
-Always be encouraging, detailed, and specific. When possible, mention actual professors and research groups. Provide URLs when available. Be realistic about admission chances and funding.`
+Always be encouraging, detailed, and specific. When possible, mention actual professors and research groups. Be realistic about admission chances and funding.`
 
-// Build university data context for the AI
-function buildUniversityContext(): string {
-  const summary = universities.slice(0, 30).map((u) =>
-    `${u.name} (${u.city}, ${u.state}) | Fields: ${u.fields} | Deadline: ${u.deadline} | Funding: ${u.fundingType} | GRE: ${u.greRequired} | Stipend: $${u.annualStipend?.toLocaleString() || 'N/A'}/yr | TOEFL: ${u.toeflMin || 'N/A'} | IELTS: ${u.ieltsMin || 'N/A'}`
+// Build institution data context for the AI
+function buildInstitutionContext(): string {
+  const summary = institutions.slice(0, 30).map((u) =>
+    `${u.name} (${u.city}, ${u.state}) | Type: ${u.type} | Fields: ${u.fields} | Deadline: ${u.deadline} | Contract: ${u.contractType} | €${u.monthlyEur?.toLocaleString() || 'N/A'}/mo | Language: ${u.languageInstruction} | English Lab: ${u.englishLabLife ? 'Yes' : 'No'}`
   ).join('\n')
   return summary
 }
 
 // Call Google Gemini API
 async function callGemini(apiKey: string, messages: Array<{ role: string; content: string }>) {
-  // Convert messages to Gemini format
   const contents = messages.map((msg) => ({
     role: msg.role === 'assistant' ? 'model' : 'user',
     parts: [{ text: msg.content }],
@@ -48,10 +60,7 @@ async function callGemini(apiKey: string, messages: Array<{ role: string; conten
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         contents,
-        generationConfig: {
-          temperature: 0.7,
-          maxOutputTokens: 2048,
-        },
+        generationConfig: { temperature: 0.7, maxOutputTokens: 2048 },
       }),
     }
   )
@@ -65,7 +74,7 @@ async function callGemini(apiKey: string, messages: Array<{ role: string; conten
   return data?.candidates?.[0]?.content?.parts?.[0]?.text || 'No response from Gemini.'
 }
 
-// Call OpenAI-compatible API (OpenAI, Groq, Together, etc.)
+// Call OpenAI-compatible API
 async function callOpenAI(
   apiKey: string,
   messages: Array<{ role: string; content: string }>,
@@ -99,8 +108,9 @@ async function callOpenAI(
 async function callZAI(messages: Array<{ role: string; content: string }>) {
   const ZAI = (await import('z-ai-web-dev-sdk')).default
   const zai = await ZAI.create()
+  const typedMessages = messages.map((m) => ({ role: m.role as 'user' | 'assistant', content: m.content }))
   const completion = await zai.chat.completions.create({
-    messages,
+    messages: typedMessages,
     thinking: { type: 'disabled' },
   })
   return completion?.choices?.[0]?.message?.content || 'I could not generate a response.'
@@ -115,28 +125,27 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'message is required' }, { status: 400 })
     }
 
-    // Build messages array
     const messages: Array<{ role: string; content: string }> = [
       { role: 'assistant', content: SYSTEM_PROMPT },
     ]
 
-    // Add university data context
-    const uniContext = buildUniversityContext()
+    // Add institution data context
+    const instContext = buildInstitutionContext()
     messages.push({
       role: 'assistant',
-      content: `Here is a database of US Physics PhD programs for reference:\n${uniContext}\n\nUse this data to provide accurate, specific answers. If asked about a university not in this list, use your general knowledge.`,
+      content: `Here is a database of German Physics PhD institutions for reference:\n${instContext}\n\nUse this data to provide accurate, specific answers. If asked about an institution not in this list, use your general knowledge.`,
     })
 
-    // Add watchlist context if provided
+    // Add watchlist context
     if (watchlistedIds && Array.isArray(watchlistedIds) && watchlistedIds.length > 0) {
-      const watchlisted = universities.filter((uni) => watchlistedIds.includes(uni.id)).slice(0, 10)
+      const watchlisted = institutions.filter((inst) => watchlistedIds.includes(inst.id)).slice(0, 10)
       if (watchlisted.length > 0) {
         const watchlistContext = watchlisted
-          .map((u) => `${u.name} (${u.city}, ${u.state}) - Fields: ${u.fields} - Deadline: ${u.deadline} - Funding: ${u.fundingType} - GRE: ${u.greRequired} - Stipend: $${u.annualStipend?.toLocaleString() || 'N/A'}/yr`)
+          .map((u) => `${u.name} (${u.city}, ${u.state}) - Fields: ${u.fields} - Deadline: ${u.deadline} - Contract: ${u.contractType} - €${u.monthlyEur?.toLocaleString() || 'N/A'}/mo`)
           .join('\n')
         messages.push({
           role: 'assistant',
-          content: `The student has these universities in their watchlist:\n${watchlistContext}`,
+          content: `The student has these institutions in their watchlist:\n${watchlistContext}`,
         })
       }
     }
@@ -150,12 +159,10 @@ export async function POST(request: Request) {
       }
     }
 
-    // Add current user message
     messages.push({ role: 'user', content: message })
 
     let assistantMessage: string
 
-    // Determine which AI provider to use
     if (apiKey && provider === 'gemini') {
       assistantMessage = await callGemini(apiKey, messages)
     } else if (apiKey && provider === 'openai') {
@@ -167,7 +174,6 @@ export async function POST(request: Request) {
     } else if (apiKey && provider === 'custom') {
       assistantMessage = await callOpenAI(apiKey, messages, baseUrl || 'https://api.openai.com/v1', model || 'gpt-4o-mini')
     } else {
-      // Fallback to z-ai-web-dev-sdk (sandbox only)
       try {
         assistantMessage = await callZAI(messages)
       } catch {

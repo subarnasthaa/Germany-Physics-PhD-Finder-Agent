@@ -1,19 +1,12 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
-import { Star, Trash2, MapPin, Calendar, Award, Loader2, BookOpen, DollarSign } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { Star, Trash2, Search, MapPin, Banknote, Languages } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
 
-interface University {
+interface Institution {
   id: string
   name: string
   city: string
@@ -21,16 +14,14 @@ interface University {
   type: string
   department: string
   fields: string
+  phdType: string
   deadline: string
-  fundingType: string
-  annualStipend: number | null
-  tuitionWaiver: boolean
-  healthInsurance: boolean
-  greRequired: string
-  scholarshipTypes: string
-  url: string
+  contractType: string
+  monthlyEur: number | null
+  languageInstruction: string
+  englishLabLife: boolean
   notableProfessors: string
-  notesForNepali: string | null
+  notesForNepali: string
 }
 
 interface WatchlistTabProps {
@@ -40,206 +31,123 @@ interface WatchlistTabProps {
   watchlistedIdsParam: string
 }
 
-export default function WatchlistTab({ watchlistedIds, toggleWatchlist, onNavigate, watchlistedIdsParam }: WatchlistTabProps) {
-  const [universities, setUniversities] = useState<University[]>([])
-  const [loading, setLoading] = useState(true)
+export default function WatchlistTab({ watchlistedIds, toggleWatchlist, onNavigate }: WatchlistTabProps) {
+  const [allInstitutions, setAllInstitutions] = useState<Institution[]>([])
   const [fieldFilter, setFieldFilter] = useState('all')
-  const [fields, setFields] = useState<string[]>([])
-
-  const fetchWatchlistedUniversities = useCallback(async () => {
-    if (watchlistedIds.length === 0) {
-      setUniversities([])
-      setFields([])
-      setLoading(false)
-      return
-    }
-    setLoading(true)
-    try {
-      const params = new URLSearchParams()
-      params.set('watchlistedIds', watchlistedIdsParam)
-      const res = await fetch(`/api/universities?${params.toString()}`)
-      if (res.ok) {
-        const data: University[] = await res.json()
-        // Filter to only watchlisted ones (in case API returns extras)
-        const watchlistedSet = new Set(watchlistedIds)
-        const filtered = data.filter((u) => watchlistedSet.has(u.id))
-        setUniversities(filtered)
-        // Extract fields
-        const fieldSet = new Set<string>()
-        for (const uni of filtered) {
-          uni.fields.split(',').map((f) => f.trim()).filter(Boolean).forEach((f) => fieldSet.add(f))
-        }
-        setFields(Array.from(fieldSet).sort())
-      }
-    } catch (err) {
-      console.error('Error fetching watchlisted universities:', err)
-    } finally {
-      setLoading(false)
-    }
-  }, [watchlistedIds.length, watchlistedIdsParam])
 
   useEffect(() => {
-    fetchWatchlistedUniversities()
-  }, [fetchWatchlistedUniversities])
+    fetch('/api/universities')
+      .then((r) => r.json())
+      .then((data: Institution[]) => setAllInstitutions(data))
+      .catch(() => {})
+  }, [])
 
-  const handleRemove = (universityId: string) => {
-    toggleWatchlist(universityId)
-  }
+  const institutions = allInstitutions.filter((inst) => watchlistedIds.includes(inst.id))
 
-  const filteredUniversities = fieldFilter === 'all'
-    ? universities
-    : universities.filter((uni) => uni.fields.includes(fieldFilter))
+  const allFields = Array.from(new Set(institutions.flatMap((i) => i.fields.split('|').map((f) => f.trim()).filter(Boolean)))).sort()
+  const filtered = fieldFilter === 'all'
+    ? institutions
+    : institutions.filter((i) => i.fields.includes(fieldFilter))
 
-  if (loading) {
+  if (watchlistedIds.length === 0) {
     return (
-      <div className="flex items-center justify-center py-12">
-        <Loader2 className="size-8 text-blue-600 animate-spin" />
-        <span className="ml-3 text-gray-600 dark:text-gray-400">Loading watchlist...</span>
+      <div className="flex flex-col items-center justify-center py-20 px-4">
+        <Star className="size-16 text-gray-300 dark:text-gray-600 mb-4" />
+        <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">Your watchlist is empty</h3>
+        <p className="text-sm text-gray-500 dark:text-gray-400 mb-4 text-center">
+          Star institutions you&apos;re interested in to track their deadlines and funding info
+        </p>
+        <Button onClick={() => onNavigate('universities')} className="bg-amber-600 hover:bg-amber-700 text-white">
+          Browse Institutions
+        </Button>
       </div>
     )
   }
 
   return (
     <div className="space-y-4 p-4 md:p-6">
-      {/* Header */}
-      <div>
-        <h2 className="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
-          <Star className="size-5 text-amber-500" />
-          My Watchlist
+      <div className="flex items-center justify-between">
+        <h2 className="text-lg font-bold text-gray-900 dark:text-white">
+          My Watchlist ({institutions.length})
         </h2>
-        <p className="text-sm text-gray-500 dark:text-gray-400">
-          {universities.length} {universities.length === 1 ? 'university' : 'universities'} saved
-        </p>
+        {allFields.length > 1 && (
+          <select
+            value={fieldFilter}
+            onChange={(e) => setFieldFilter(e.target.value)}
+            className="h-9 px-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm"
+          >
+            <option value="all">All Fields</option>
+            {allFields.map((f) => (
+              <option key={f} value={f}>{f}</option>
+            ))}
+          </select>
+        )}
       </div>
 
-      {/* Field Filter */}
-      {fields.length > 0 && (
-        <div className="flex items-center gap-2">
-          <span className="text-sm text-gray-600 dark:text-gray-400">Filter by field:</span>
-          <Select value={fieldFilter} onValueChange={setFieldFilter}>
-            <SelectTrigger className="w-[160px] h-8 text-xs">
-              <SelectValue placeholder="All Fields" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Fields</SelectItem>
-              {fields.map((field) => (
-                <SelectItem key={field} value={field}>{field}</SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-      )}
+      <div className="grid gap-4 md:grid-cols-2">
+        {filtered.map((inst) => {
+          const typeColor = inst.type === 'Max Planck Institute'
+            ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'
+            : inst.type === 'Helmholtz Center'
+            ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'
+            : inst.type === 'Leibniz Institute'
+            ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
+            : 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400'
 
-      {/* Watchlist Items */}
-      {filteredUniversities.length === 0 ? (
-        <div className="text-center py-12">
-          <Star className="size-12 text-gray-300 dark:text-gray-600 mx-auto mb-3" />
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">No universities in watchlist</h3>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">
-            {universities.length === 0
-              ? 'Start adding universities to your watchlist to track their deadlines and details.'
-              : 'No universities match the selected field filter.'}
-          </p>
-          {universities.length === 0 && (
-            <Button onClick={() => onNavigate('universities')} className="bg-blue-600 hover:bg-blue-700 text-white">
-              Browse Universities
-            </Button>
-          )}
-        </div>
-      ) : (
-        <div className="space-y-3">
-          {filteredUniversities.map((uni) => {
-            const fieldsArr = uni.fields.split(',').map((f) => f.trim()).filter(Boolean)
-            const scholarships = uni.scholarshipTypes ? uni.scholarshipTypes.split(',').map((s) => s.trim()).filter(Boolean) : []
-
-            return (
-              <Card key={uni.id} className="hover:shadow-md transition-shadow border-gray-200 dark:border-gray-800">
-                <CardContent className="p-4">
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="flex-1 min-w-0 space-y-2">
-                      {/* Name & State */}
-                      <div>
-                        <h3 className="text-base font-semibold text-gray-900 dark:text-white truncate">{uni.name}</h3>
-                        <div className="flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400">
-                          <MapPin className="size-3.5 shrink-0" />
-                          <span>{uni.city}, {uni.state}</span>
-                        </div>
-                      </div>
-
-                      {/* Badges */}
-                      <div className="flex flex-wrap gap-1.5">
-                        <Badge variant={uni.type === 'National Lab' ? 'default' : 'secondary'} className={
-                          uni.type === 'National Lab'
-                            ? 'bg-red-600 hover:bg-red-700 text-white text-xs'
-                            : 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300 text-xs'
-                        }>
-                          {uni.type}
-                        </Badge>
-                        {uni.fundingType === 'Full' && (
-                          <Badge className="bg-blue-600 text-white text-xs">Fully Funded</Badge>
-                        )}
-                        {(uni.greRequired === 'Not Required' || uni.greRequired === 'Waived') && (
-                          <Badge className="bg-sky-100 text-sky-800 dark:bg-sky-900/30 dark:text-sky-300 text-xs">GRE Not Required</Badge>
-                        )}
-                      </div>
-
-                      {/* Department */}
-                      <div className="flex items-center gap-1.5 text-xs text-gray-600 dark:text-gray-400">
-                        <BookOpen className="size-3.5 shrink-0" />
-                        <span className="truncate">{uni.department}</span>
-                      </div>
-
-                      {/* Fields */}
-                      <div className="flex flex-wrap gap-1">
-                        {fieldsArr.map((field) => (
-                          <Badge key={field} variant="outline" className="text-xs font-normal">{field}</Badge>
-                        ))}
-                      </div>
-
-                      {/* Deadline */}
-                      <div className="flex items-center gap-1.5 text-xs text-gray-600 dark:text-gray-400">
-                        <Calendar className="size-3.5 shrink-0" />
-                        <span>Deadline: <span className="font-medium">{uni.deadline}</span></span>
-                      </div>
-
-                      {/* Stipend */}
-                      {uni.annualStipend && (
-                        <div className="flex items-center gap-1.5 text-xs text-gray-600 dark:text-gray-400">
-                          <DollarSign className="size-3.5 shrink-0" />
-                          <span>Annual Stipend: <span className="font-medium">${uni.annualStipend.toLocaleString()}</span></span>
-                        </div>
-                      )}
-
-                      {/* Scholarships */}
-                      {scholarships.length > 0 && (
-                        <div className="flex flex-wrap gap-1">
-                          {scholarships.map((s) => (
-                            <Badge key={s} variant="outline" className="text-xs font-normal bg-amber-50 text-amber-700 dark:bg-amber-900/20 dark:text-amber-400 border-amber-200 dark:border-amber-800">
-                              <Award className="size-3 mr-0.5" />
-                              {s}
-                            </Badge>
-                          ))}
-                        </div>
-                      )}
+          return (
+            <Card key={inst.id} className="hover:shadow-md transition-shadow">
+              <CardContent className="p-4">
+                <div className="flex items-start justify-between gap-2 mb-2">
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-1">{inst.name}</h3>
+                    <div className="flex items-center gap-1.5 text-xs text-gray-500">
+                      <MapPin className="size-3" />
+                      <span>{inst.city}, {inst.state}</span>
                     </div>
-
-                    {/* Remove Button */}
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => handleRemove(uni.id)}
-                      className="shrink-0 text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/20"
-                      aria-label="Remove from watchlist"
-                    >
-                      <Trash2 className="size-4" />
-                    </Button>
                   </div>
-                </CardContent>
-              </Card>
-            )
-          })}
-        </div>
-      )}
+                  <button
+                    onClick={() => toggleWatchlist(inst.id)}
+                    className="p-1.5 rounded text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors"
+                  >
+                    <Trash2 className="size-4" />
+                  </button>
+                </div>
+
+                <div className="flex flex-wrap gap-1.5 mb-3">
+                  <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${typeColor}`}>
+                    {inst.type === 'Max Planck Institute' ? 'MPI' : inst.type === 'Helmholtz Center' ? 'Helmholtz' : inst.type === 'Leibniz Institute' ? 'Leibniz' : 'University'}
+                  </span>
+                  {inst.contractType.includes('TVöD') && (
+                    <Badge variant="secondary" className="text-xs bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">
+                      TVöD E13
+                    </Badge>
+                  )}
+                  {(inst.languageInstruction === 'English' || inst.languageInstruction === 'Both') && (
+                    <Badge variant="secondary" className="text-xs bg-sky-100 text-sky-700 dark:bg-sky-900/30 dark:text-sky-400">
+                      English OK
+                    </Badge>
+                  )}
+                </div>
+
+                <div className="space-y-1.5 text-xs text-gray-600 dark:text-gray-400">
+                  <div className="flex items-center gap-2">
+                    <Banknote className="size-3.5 text-green-500" />
+                    <span>{inst.monthlyEur ? `€${inst.monthlyEur.toLocaleString()}/month` : 'Stipend varies'}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Languages className="size-3.5 text-blue-500" />
+                    <span>{inst.languageInstruction}</span>
+                  </div>
+                  <p className="text-gray-500">Deadline: {inst.deadline || 'Rolling'}</p>
+                  {inst.fields && (
+                    <p className="text-gray-500">Fields: {inst.fields.replace(/\|/g, ', ')}</p>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          )
+        })}
+      </div>
     </div>
   )
 }

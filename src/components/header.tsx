@@ -11,9 +11,9 @@ interface HeaderProps {
 
 const tabs = [
   { id: 'dashboard', label: 'Dashboard', shortLabel: 'Home' },
-  { id: 'universities', label: 'Universities', shortLabel: 'Unis' },
-  { id: 'national-labs', label: 'National Labs', shortLabel: 'Labs' },
-  { id: 'funding-guide', label: 'Funding Guide', shortLabel: 'Funding' },
+  { id: 'universities', label: 'Institutions', shortLabel: 'Instit.' },
+  { id: 'mpi-labs', label: 'MPI & Labs', shortLabel: 'MPI' },
+  { id: 'daad-guide', label: 'DAAD Guide', shortLabel: 'DAAD' },
   { id: 'watchlist', label: 'Watchlist', shortLabel: 'Watch' },
   { id: 'alerts', label: 'Alerts', shortLabel: 'Alerts' },
   { id: 'agent', label: 'AI Agent', shortLabel: 'AI' },
@@ -23,7 +23,7 @@ function CountdownTimer() {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 })
 
   useEffect(() => {
-    const targetDate = new Date('2025-12-01T00:00:00-05:00')
+    const targetDate = new Date('2026-01-15T00:00:00+01:00')
 
     const updateCountdown = () => {
       const now = new Date()
@@ -50,16 +50,16 @@ function CountdownTimer() {
   const isExpired = timeLeft.days === 0 && timeLeft.hours === 0 && timeLeft.minutes === 0 && timeLeft.seconds === 0
 
   return (
-    <div className="flex items-center gap-2 bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg px-3 py-1.5">
-      <Clock className="size-4 text-blue-600 dark:text-blue-400" />
+    <div className="flex items-center gap-2 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-lg px-3 py-1.5">
+      <Clock className="size-4 text-amber-600 dark:text-amber-400" />
       <div className="flex items-center gap-1 text-xs font-medium">
         {isExpired ? (
-          <span className="text-red-600 dark:text-red-400">Fall 2026 Application Window Open!</span>
+          <span className="text-red-600 dark:text-red-400">Winter 2026 Application Window Open!</span>
         ) : (
           <>
-            <span className="text-blue-700 dark:text-blue-300 hidden sm:inline">Fall 2026 Deadline:</span>
-            <span className="text-blue-700 dark:text-blue-300 sm:hidden">Deadline:</span>
-            <span className="font-bold text-blue-600 dark:text-blue-400 tabular-nums">
+            <span className="text-amber-700 dark:text-amber-300 hidden sm:inline">Winter 2026 Deadline:</span>
+            <span className="text-amber-700 dark:text-amber-300 sm:hidden">Deadline:</span>
+            <span className="font-bold text-amber-600 dark:text-amber-400 tabular-nums">
               {timeLeft.days}d {String(timeLeft.hours).padStart(2, '0')}h {String(timeLeft.minutes).padStart(2, '0')}m {String(timeLeft.seconds).padStart(2, '0')}s
             </span>
           </>
@@ -78,12 +78,12 @@ export default function Header({ activeTab, onTabChange }: HeaderProps) {
         {/* Top row: Logo + Countdown */}
         <div className="flex items-center justify-between py-3">
           <div className="flex items-center gap-3">
-            <div className="flex items-center justify-center size-10 rounded-xl bg-blue-700 text-white shadow-sm">
+            <div className="flex items-center justify-center size-10 rounded-xl bg-amber-600 text-white shadow-sm">
               <GraduationCap className="size-6" />
             </div>
             <div>
               <h1 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white leading-tight">
-                USA Physics PhD Finder
+                Germany Physics PhD Finder
               </h1>
               <p className="text-xs text-gray-500 dark:text-gray-400 hidden sm:block">
                 For Nepali MSc Physics Students | Tribhuvan University
@@ -122,8 +122,8 @@ export default function Header({ activeTab, onTabChange }: HeaderProps) {
               onClick={() => onTabChange(tab.id)}
               className={`px-4 py-2.5 text-sm font-medium rounded-t-lg transition-colors whitespace-nowrap ${
                 activeTab === tab.id
-                  ? 'bg-blue-700 text-white shadow-sm'
-                  : 'text-gray-600 dark:text-gray-400 hover:text-blue-700 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/20'
+                  ? 'bg-amber-600 text-white shadow-sm'
+                  : 'text-gray-600 dark:text-gray-400 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-950/20'
               }`}
             >
               {tab.label}
@@ -145,8 +145,8 @@ export default function Header({ activeTab, onTabChange }: HeaderProps) {
                 }}
                 className={`px-2 py-2 text-xs font-medium rounded-lg transition-colors ${
                   activeTab === tab.id
-                    ? 'bg-blue-700 text-white shadow-sm'
-                    : 'text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 hover:bg-blue-50 dark:hover:bg-blue-950/20'
+                    ? 'bg-amber-600 text-white shadow-sm'
+                    : 'text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 hover:bg-amber-50 dark:hover:bg-amber-950/20'
                 }`}
               >
                 {tab.shortLabel}

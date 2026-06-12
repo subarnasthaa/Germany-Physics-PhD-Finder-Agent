@@ -86,33 +86,33 @@ const PROVIDERS = [
 
 const suggestedPrompts = [
   {
-    label: 'Best universities for astrophysics',
+    label: 'Best MPI for astrophysics',
     icon: BookOpen,
-    prompt: 'What are the best US universities for astrophysics PhD?',
+    prompt: 'What are the best Max Planck Institutes for astrophysics PhD in Germany?',
   },
   {
-    label: 'How to get funding',
+    label: 'DAAD scholarships',
     icon: Award,
-    prompt: 'How can Nepali students get funding for a US PhD in physics?',
+    prompt: 'How can Nepali students get DAAD scholarships for a PhD in physics in Germany?',
   },
   {
-    label: 'GRE requirements',
+    label: 'TVöD E13 explained',
     icon: FileText,
-    prompt: 'Do I need GRE for US physics PhD programs?',
+    prompt: 'What is TVöD E13 salary for PhD students in Germany?',
   },
   {
-    label: 'About national labs',
+    label: 'About IMPRS programs',
     icon: Globe,
-    prompt: 'Tell me about national lab opportunities for physics research',
+    prompt: 'Tell me about IMPRS programs for physics PhD in Germany',
   },
   {
     label: 'Application timeline',
     icon: HelpCircle,
-    prompt: 'What is the application timeline for Fall 2026 admission?',
+    prompt: 'What is the application timeline for Winter 2026 admission to German PhD programs?',
   },
 ]
 
-const STORAGE_KEY = 'usa-phd-finder-ai-settings'
+const STORAGE_KEY = 'germany-phd-finder-ai-settings'
 
 function loadSettings(): AISettings | null {
   if (typeof window === 'undefined') return null
@@ -479,10 +479,10 @@ export default function AgentChatTab({ watchlistedIds }: AgentChatTabProps) {
               <Bot className="size-8 text-blue-600 dark:text-blue-400" />
             </div>
             <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1">
-              USA Physics PhD Finder Agent
+              Germany Physics PhD Finder Agent
             </h3>
             <p className="text-sm text-gray-500 dark:text-gray-400 max-w-md mb-2">
-              I can help you find the best PhD programs in the USA, explain fellowship options, and guide you through the application process.
+              I can help you find the best PhD programs in Germany, explain DAAD scholarships, TVöD employment, and guide you through the application process.
             </p>
 
             {/* API Key Status */}
@@ -621,7 +621,7 @@ export default function AgentChatTab({ watchlistedIds }: AgentChatTabProps) {
             onChange={(e) => setInput(e.target.value)}
             placeholder={
               settings?.apiKey
-                ? 'Ask about PhD programs, fellowships, application process...'
+                ? 'Ask about PhD programs, DAAD, TVöD, IMPRS...'
                 : 'Configure API key to start chatting...'
             }
             disabled={loading || !settings?.apiKey}

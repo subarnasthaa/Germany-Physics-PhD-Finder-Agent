@@ -1,77 +1,49 @@
 import { NextResponse } from 'next/server'
-import { universities } from '@/lib/static-data'
+import { institutions } from '@/lib/static-data'
 
-interface FieldCount {
-  field: string
-  count: number
-}
+export async function GET() {
+  const totalInstitutions = institutions.length
+  const totalMPI = institutions.filter((i) => i.type === 'Max Planck Institute').length
+  const totalHelmholtz = institutions.filter((i) => i.type === 'Helmholtz Center').length
+  const totalLeibniz = institutions.filter((i) => i.type === 'Leibniz Institute').length
+  const tvodPositions = institutions.filter((i) => i.contractType.includes('TVöD')).length
+  const englishOnly = institutions.filter((i) => i.languageInstruction === 'English' || i.languageInstruction === 'Both').length
 
-interface StateCount {
-  state: string
-  count: number
-}
+  const stipends = institutions.filter((i) => i.monthlyEur).map((i) => i.monthlyEur as number)
+  const avgStipendEur = stipends.length > 0 ? Math.round(stipends.reduce((a, b) => a + b, 0) / stipends.length) : 0
 
-export async function GET(request: Request) {
-  try {
-    const { searchParams } = new URL(request.url)
-    const watchlistedIdsParam = searchParams.get('watchlistedIds')
-
-    const watchlistedIdSet = new Set(
-      watchlistedIdsParam
-        ? watchlistedIdsParam.split(',').map((id) => id.trim()).filter(Boolean)
-        : []
-    )
-
-    // Basic counts
-    const totalUniversities = universities.filter((uni) => uni.type === 'University').length
-    const totalNationalLabs = universities.filter((uni) => uni.type === 'National Lab').length
-    const fullyFundedCount = universities.filter((uni) => uni.fundingType === 'Full').length
-    const greNotRequiredCount = universities.filter((uni) => uni.greRequired === 'Not Required' || uni.greRequired === 'Waived').length
-    const watchlistedCount = universities.filter((uni) => watchlistedIdSet.has(uni.id)).length
-
-    // Calculate field frequency
-    const fieldMap = new Map<string, number>()
-    for (const uni of universities) {
-      if (uni.fields) {
-        const fields = uni.fields.split(',').map((f) => f.trim()).filter(Boolean)
-        for (const field of fields) {
-          fieldMap.set(field, (fieldMap.get(field) || 0) + 1)
-        }
-      }
-    }
-
-    const topFields: FieldCount[] = Array.from(fieldMap.entries())
-      .map(([field, count]) => ({ field, count }))
-      .sort((a, b) => b.count - a.count)
-      .slice(0, 15)
-
-    // Calculate state frequency
-    const stateMap = new Map<string, number>()
-    for (const uni of universities) {
-      if (uni.state) {
-        stateMap.set(uni.state, (stateMap.get(uni.state) || 0) + 1)
-      }
-    }
-
-    const topStates: StateCount[] = Array.from(stateMap.entries())
-      .map(([state, count]) => ({ state, count }))
-      .sort((a, b) => b.count - a.count)
-      .slice(0, 10)
-
-    return NextResponse.json({
-      totalUniversities,
-      totalNationalLabs,
-      fullyFundedCount,
-      greNotRequiredCount,
-      watchlistedCount,
-      topFields,
-      topStates,
+  // Top fields
+  const fieldCount: Record<string, number> = {}
+  institutions.forEach((inst) => {
+    inst.fields.split('|').forEach((f) => {
+      const field = f.trim()
+      if (field) fieldCount[field] = (fieldCount[field] || 0) + 1
     })
-  } catch (error) {
-    console.error('Error fetching stats:', error)
-    return NextResponse.json(
-      { error: 'Failed to fetch statistics' },
-      { status: 500 }
-    )
-  }
+  })
+  const topFields = Object.entries(fieldCount)
+    .sort(([, a], [, b]) => b - a)
+    .slice(0, 10)
+    .map(([field, count]) => ({ field, count }))
+
+  // Top states
+  const stateCount: Record<string, number> = {}
+  institutions.forEach((inst) => {
+    stateCount[inst.state] = (stateCount[inst.state] || 0) + 1
+  })
+  const topStates = Object.entries(stateCount)
+    .sort(([, a], [, b]) => b - a)
+    .slice(0, 10)
+    .map(([state, count]) => ({ state, count }))
+
+  return NextResponse.json({
+    totalInstitutions,
+    totalMPI,
+    totalHelmholtz,
+    totalLeibniz,
+    tvodPositions,
+    englishOnly,
+    avgStipendEur,
+    topFields,
+    topStates,
+  })
 }
