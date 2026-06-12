@@ -21,7 +21,7 @@ interface Stats {
   totalLeibniz: number
   tvodPositions: number
   englishOnly: number
-  avgStipendEur: number
+  avgStipendGbp: number
 }
 
 interface DashboardTabProps {
@@ -82,24 +82,24 @@ export default function DashboardTab({ onNavigate }: DashboardTabProps) {
   return (
     <div className="space-y-6 p-4 md:p-6">
       {/* Welcome Banner */}
-      <Card className="border-0 bg-gradient-to-r from-red-600 to-red-700 text-white overflow-hidden">
+      <Card className="border-0 bg-gradient-to-r from-blue-600 to-blue-700 text-white overflow-hidden">
         <CardContent className="p-6 md:p-8">
           <div className="flex items-start gap-4">
             <div className="size-14 rounded-2xl bg-white/20 flex items-center justify-center shrink-0">
               <GraduationCap className="size-7" />
             </div>
             <div className="flex-1">
-              <h2 className="text-2xl font-bold mb-1">Konnichiwa! 🇯🇵</h2>
-              <p className="text-red-100 text-sm mb-4 max-w-xl">
-                Find your Physics PhD in Germany — from universities to Research Institutes,
-                Helmholtz Centers, and Leibniz Institutes. Most positions are fully funded TVöD E13 employment!
+              <h2 className="text-2xl font-bold mb-1">Hello! 🇬🇧</h2>
+              <p className="text-blue-100 text-sm mb-4 max-w-xl">
+                Find your Physics PhD in the UK — from Russell Group universities to world-class Research Labs.
+                Most positions are EPSRC funded with £19,237/year stipend, and Commonwealth Scholarships cover everything for Nepali students!
               </p>
               <div className="flex flex-wrap gap-2">
                 <Button
                   variant="secondary"
                   size="sm"
                   onClick={() => onNavigate('universities')}
-                  className="bg-white text-red-700 hover:bg-red-50"
+                  className="bg-white text-blue-700 hover:bg-blue-50"
                 >
                   Browse Institutions
                   <ArrowRight className="size-4 ml-1" />
@@ -110,7 +110,7 @@ export default function DashboardTab({ onNavigate }: DashboardTabProps) {
                   onClick={() => onNavigate('daad-guide')}
                   className="border-white/30 text-white hover:bg-white/10"
                 >
-                  MEXT Guide
+                  Commonwealth Guide
                 </Button>
               </div>
             </div>
@@ -120,29 +120,15 @@ export default function DashboardTab({ onNavigate }: DashboardTabProps) {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <Card className="border-red-200 dark:border-red-800/50">
+        <Card className="border-blue-200 dark:border-blue-800/50">
           <CardContent className="p-4">
             <div className="flex items-center gap-3">
-              <div className="size-10 rounded-lg bg-red-100 dark:bg-amber-900/30 flex items-center justify-center">
-                <GraduationCap className="size-5 text-red-600" />
+              <div className="size-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
+                <GraduationCap className="size-5 text-blue-600" />
               </div>
               <div>
                 <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.totalInstitutions}</p>
-                <p className="text-xs text-gray-500">Total Institutions</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-red-200 dark:border-red-800/50">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-3">
-              <div className="size-10 rounded-lg bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
-                <Atom className="size-5 text-red-600" />
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.totalMPI}</p>
-                <p className="text-xs text-gray-500">Research Institutes</p>
+                <p className="text-xs text-gray-500">Total Universities</p>
               </div>
             </div>
           </CardContent>
@@ -152,11 +138,11 @@ export default function DashboardTab({ onNavigate }: DashboardTabProps) {
           <CardContent className="p-4">
             <div className="flex items-center gap-3">
               <div className="size-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
-                <FlaskConical className="size-5 text-blue-600" />
+                <Atom className="size-5 text-blue-600" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.totalHelmholtz}</p>
-                <p className="text-xs text-gray-500">Helmholtz Centers</p>
+                <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.totalMPI}</p>
+                <p className="text-xs text-gray-500">Research Labs</p>
               </div>
             </div>
           </CardContent>
@@ -166,11 +152,25 @@ export default function DashboardTab({ onNavigate }: DashboardTabProps) {
           <CardContent className="p-4">
             <div className="flex items-center gap-3">
               <div className="size-10 rounded-lg bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
-                <Building2 className="size-5 text-green-600" />
+                <FlaskConical className="size-5 text-green-600" />
               </div>
               <div>
                 <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.tvodPositions}</p>
-                <p className="text-xs text-gray-500">MEXT Funded</p>
+                <p className="text-xs text-gray-500">EPSRC Funded</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="border-amber-200 dark:border-amber-800/50">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-3">
+              <div className="size-10 rounded-lg bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center">
+                <Building2 className="size-5 text-amber-600" />
+              </div>
+              <div>
+                <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.totalHelmholtz}</p>
+                <p className="text-xs text-gray-500">Commonwealth Eligible</p>
               </div>
             </div>
           </CardContent>
@@ -183,7 +183,7 @@ export default function DashboardTab({ onNavigate }: DashboardTabProps) {
         <Card>
           <CardContent className="p-4 md:p-6">
             <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-              <TrendingUp className="size-4 text-red-600" />
+              <TrendingUp className="size-4 text-blue-600" />
               Top Research Fields
             </h3>
             <div className="space-y-2.5">
@@ -192,7 +192,7 @@ export default function DashboardTab({ onNavigate }: DashboardTabProps) {
                   <span className="text-xs text-gray-600 dark:text-gray-400 w-28 shrink-0 truncate">{f.field}</span>
                   <div className="flex-1 h-5 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-red-500 rounded-full transition-all duration-500"
+                      className="h-full bg-blue-500 rounded-full transition-all duration-500"
                       style={{ width: `${(f.count / maxFieldCount) * 100}%` }}
                     />
                   </div>
@@ -203,26 +203,26 @@ export default function DashboardTab({ onNavigate }: DashboardTabProps) {
           </CardContent>
         </Card>
 
-        {/* Top States */}
+        {/* Top Countries */}
         <Card>
           <CardContent className="p-4 md:p-6">
             <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-              <BookOpen className="size-4 text-red-600" />
-              Top Prefectures
+              <BookOpen className="size-4 text-blue-600" />
+              Top Countries
             </h3>
             <div className="space-y-2">
               {topStates.slice(0, 8).map((s, i) => (
                 <div key={s.state} className="flex items-center gap-3">
                   <span className={`size-6 rounded-full flex items-center justify-center text-xs font-bold ${
-                    i === 0 ? 'bg-red-500 text-white' :
+                    i === 0 ? 'bg-blue-500 text-white' :
                     i === 1 ? 'bg-gray-400 text-white' :
-                    i === 2 ? 'bg-red-700 text-white' :
+                    i === 2 ? 'bg-blue-700 text-white' :
                     'bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400'
                   }`}>
                     {i + 1}
                   </span>
                   <span className="text-sm text-gray-700 dark:text-gray-300 flex-1">{s.state}</span>
-                  <span className="text-sm font-medium text-red-600">{s.count}</span>
+                  <span className="text-sm font-medium text-blue-600">{s.count}</span>
                 </div>
               ))}
             </div>
@@ -237,19 +237,19 @@ export default function DashboardTab({ onNavigate }: DashboardTabProps) {
             <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-3">Quick Links</h3>
             <div className="space-y-2">
               {[
-                { label: 'MEXT Scholarship Guide', tab: 'daad-guide', icon: BookOpen },
+                { label: 'Commonwealth Scholarship Guide', tab: 'daad-guide', icon: BookOpen },
                 { label: 'My Watchlist', tab: 'watchlist', icon: Clock },
                 { label: 'AI Agent', tab: 'agent', icon: Atom },
-                { label: 'RIKEN MPI & Research Labs Labs', tab: 'mpi-labs', icon: FlaskConical },
+                { label: 'RAL & NPL Research Labs', tab: 'mpi-labs', icon: FlaskConical },
               ].map((link) => {
                 const Icon = link.icon
                 return (
                   <button
                     key={link.tab}
                     onClick={() => onNavigate(link.tab)}
-                    className="w-full flex items-center gap-3 p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-red-300 dark:hover:border-red-700 hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors"
+                    className="w-full flex items-center gap-3 p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-700 hover:bg-blue-50 dark:hover:bg-blue-950/20 transition-colors"
                   >
-                    <Icon className="size-4 text-red-600" />
+                    <Icon className="size-4 text-blue-600" />
                     <span className="text-sm text-gray-700 dark:text-gray-300">{link.label}</span>
                     <ArrowRight className="size-4 text-gray-400 ml-auto" />
                   </button>
@@ -271,8 +271,8 @@ export default function DashboardTab({ onNavigate }: DashboardTabProps) {
                     key={i}
                     className={`flex items-center justify-between p-2.5 rounded-lg border-l-4 ${
                       alert.urgent
-                        ? 'border-l-red-500 bg-red-50 dark:bg-red-950/20'
-                        : 'border-l-red-500 bg-red-50 dark:bg-red-950/20'
+                        ? 'border-l-blue-500 bg-blue-50 dark:bg-blue-950/20'
+                        : 'border-l-blue-500 bg-blue-50 dark:bg-blue-950/20'
                     }`}
                   >
                     <div>
@@ -280,7 +280,7 @@ export default function DashboardTab({ onNavigate }: DashboardTabProps) {
                       <p className="text-xs text-gray-500">{alert.deadline}</p>
                     </div>
                     {alert.urgent && (
-                      <span className="text-xs font-medium text-red-600 bg-red-100 dark:bg-red-900/30 px-2 py-0.5 rounded">
+                      <span className="text-xs font-medium text-blue-600 bg-blue-100 dark:bg-blue-900/30 px-2 py-0.5 rounded">
                         Urgent
                       </span>
                     )}

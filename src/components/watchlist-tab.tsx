@@ -10,16 +10,21 @@ interface Institution {
   id: string
   name: string
   city: string
-  state: string
+  country: string
   type: string
   department: string
   fields: string
   phdType: string
   deadline: string
   contractType: string
-  monthlyEur: number | null
+  monthlyGbp: number | null
   languageInstruction: string
   englishLabLife: boolean
+  funding: {
+    epsrcDtp: boolean
+    commonwealthEligible: boolean
+    universityScholarships: boolean
+  }
   notableProfessors: string
   notesForNepali: string
 }
@@ -57,7 +62,7 @@ export default function WatchlistTab({ watchlistedIds, toggleWatchlist, onNaviga
         <p className="text-sm text-gray-500 dark:text-gray-400 mb-4 text-center">
           Star institutions you&apos;re interested in to track their deadlines and funding info
         </p>
-        <Button onClick={() => onNavigate('universities')} className="bg-red-600 hover:bg-red-700 text-white">
+        <Button onClick={() => onNavigate('universities')} className="bg-blue-600 hover:bg-blue-700 text-white">
           Browse Institutions
         </Button>
       </div>
@@ -86,13 +91,9 @@ export default function WatchlistTab({ watchlistedIds, toggleWatchlist, onNaviga
 
       <div className="grid gap-4 md:grid-cols-2">
         {filtered.map((inst) => {
-          const typeColor = inst.type === 'Max Planck Institute'
-            ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'
-            : inst.type === 'Helmholtz Center'
+          const typeColor = inst.type === 'Research Institute'
             ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'
-            : inst.type === 'Leibniz Institute'
-            ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
-            : 'bg-red-100 text-red-700 dark:bg-amber-900/30 dark:text-amber-400'
+            : 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'
 
           return (
             <Card key={inst.id} className="hover:shadow-md transition-shadow">
@@ -102,12 +103,12 @@ export default function WatchlistTab({ watchlistedIds, toggleWatchlist, onNaviga
                     <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-1">{inst.name}</h3>
                     <div className="flex items-center gap-1.5 text-xs text-gray-500">
                       <MapPin className="size-3" />
-                      <span>{inst.city}, {inst.state}</span>
+                      <span>{inst.city}, {inst.country}</span>
                     </div>
                   </div>
                   <button
                     onClick={() => toggleWatchlist(inst.id)}
-                    className="p-1.5 rounded text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors"
+                    className="p-1.5 rounded text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-950/20 transition-colors"
                   >
                     <Trash2 className="size-4" />
                   </button>
@@ -115,24 +116,27 @@ export default function WatchlistTab({ watchlistedIds, toggleWatchlist, onNaviga
 
                 <div className="flex flex-wrap gap-1.5 mb-3">
                   <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${typeColor}`}>
-                    {inst.type === 'Max Planck Institute' ? 'MPI' : inst.type === 'Helmholtz Center' ? 'Helmholtz' : inst.type === 'Leibniz Institute' ? 'Leibniz' : 'University'}
+                    {inst.type === 'Research Institute' ? 'Research Lab' : 'University'}
                   </span>
-                  {inst.contractType.includes('TVöD') && (
+                  {inst.funding?.epsrcDtp && (
                     <Badge variant="secondary" className="text-xs bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">
-                      TVöD E13
+                      EPSRC DTP
                     </Badge>
                   )}
-                  {(inst.languageInstruction === 'English' || inst.languageInstruction === 'Both') && (
-                    <Badge variant="secondary" className="text-xs bg-sky-100 text-sky-700 dark:bg-sky-900/30 dark:text-sky-400">
-                      English OK
+                  {inst.funding?.commonwealthEligible && (
+                    <Badge variant="secondary" className="text-xs bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400">
+                      Commonwealth
                     </Badge>
                   )}
+                  <Badge variant="secondary" className="text-xs bg-sky-100 text-sky-700 dark:bg-sky-900/30 dark:text-sky-400">
+                    English
+                  </Badge>
                 </div>
 
                 <div className="space-y-1.5 text-xs text-gray-600 dark:text-gray-400">
                   <div className="flex items-center gap-2">
                     <Banknote className="size-3.5 text-green-500" />
-                    <span>{inst.monthlyEur ? `€${inst.monthlyEur.toLocaleString()}/month` : 'Stipend varies'}</span>
+                    <span>{inst.monthlyGbp ? `£${inst.monthlyGbp.toLocaleString()}/month` : 'Stipend varies'}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Languages className="size-3.5 text-blue-500" />

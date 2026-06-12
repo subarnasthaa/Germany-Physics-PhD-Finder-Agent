@@ -15,28 +15,27 @@ export async function GET() {
     contractType: string
     languageInstruction: string
     englishLabLife: boolean
-    monthlyEur: number | null
+    monthlyGbp: number | null
     fields: string
   }> = []
 
   institutions.forEach((inst) => {
-    // For institutions with rolling admissions, create a "generic" alert
     if (inst.deadline && inst.deadline !== 'Rolling' && inst.deadline !== 'Varies') {
       const deadlineDate = new Date(inst.deadline)
       const daysLeft = Math.ceil((deadlineDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24))
-      if (daysLeft > 0 && daysLeft < 180) {
+      if (daysLeft > 0 && daysLeft < 365) {
         alerts.push({
           id: inst.id,
           name: inst.name,
           city: inst.city,
-          state: inst.state,
+          state: inst.country,
           type: inst.type,
           deadline: inst.deadline,
           daysLeft,
           contractType: inst.contractType,
           languageInstruction: inst.languageInstruction,
           englishLabLife: inst.englishLabLife,
-          monthlyEur: inst.monthlyEur,
+          monthlyGbp: inst.monthlyGbp,
           fields: inst.fields,
         })
       }
@@ -46,14 +45,14 @@ export async function GET() {
         id: inst.id,
         name: inst.name,
         city: inst.city,
-        state: inst.state,
+        state: inst.country,
         type: inst.type,
         deadline: 'Rolling Admission',
         daysLeft: 999,
         contractType: inst.contractType,
         languageInstruction: inst.languageInstruction,
         englishLabLife: inst.englishLabLife,
-        monthlyEur: inst.monthlyEur,
+        monthlyGbp: inst.monthlyGbp,
         fields: inst.fields,
       })
     }

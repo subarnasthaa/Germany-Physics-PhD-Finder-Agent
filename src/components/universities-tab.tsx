@@ -17,15 +17,15 @@ export default function UniversitiesTab({ toggleWatchlist, isWatchlisted }: Univ
   const [institutions, setInstitutions] = useState<Institution[]>([])
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
-  const [tvodOnly, setTvodOnly] = useState(false)
-  const [englishOnly, setEnglishOnly] = useState(false)
+  const [epsrcOnly, setEpsrcOnly] = useState(false)
+  const [commonwealthOnly, setCommonwealthOnly] = useState(false)
   const [watchlistedOnly, setWatchlistedOnly] = useState(false)
   const [typeFilter, setTypeFilter] = useState('all')
-  const [stateFilter, setStateFilter] = useState('all')
+  const [countryFilter, setCountryFilter] = useState('all')
   const [fieldFilter, setFieldFilter] = useState('all')
   const [showFilters, setShowFilters] = useState(false)
   const [visibleCount, setVisibleCount] = useState(12)
-  const [states, setStates] = useState<string[]>([])
+  const [countries, setCountries] = useState<string[]>([])
   const [fields, setFields] = useState<string[]>([])
 
   useEffect(() => {
@@ -33,8 +33,8 @@ export default function UniversitiesTab({ toggleWatchlist, isWatchlisted }: Univ
       .then((r) => r.json())
       .then((data) => {
         setInstitutions(data)
-        const stateSet = new Set<string>(data.map((u: Institution) => u.state))
-        setStates(Array.from(stateSet).sort())
+        const countrySet = new Set<string>(data.map((u: Institution) => u.country))
+        setCountries(Array.from(countrySet).sort())
         const fieldSet = new Set<string>()
         data.forEach((u: Institution) => {
           u.fields.split('|').forEach((f: string) => fieldSet.add(f.trim()))
@@ -53,34 +53,34 @@ export default function UniversitiesTab({ toggleWatchlist, isWatchlisted }: Univ
         inst.city.toLowerCase().includes(q) ||
         inst.fields.toLowerCase().includes(q) ||
         inst.department.toLowerCase().includes(q) ||
-        inst.state.toLowerCase().includes(q)
+        inst.country.toLowerCase().includes(q)
       if (!match) return false
     }
-    if (tvodOnly && !inst.contractType.includes('TVöD')) return false
-    if (englishOnly && inst.languageInstruction !== 'English' && inst.languageInstruction !== 'Both') return false
+    if (epsrcOnly && !inst.funding?.epsrcDtp) return false
+    if (commonwealthOnly && !inst.funding?.commonwealthEligible) return false
     if (watchlistedOnly && !isWatchlisted(inst.id)) return false
     if (typeFilter !== 'all' && inst.type !== typeFilter) return false
-    if (stateFilter !== 'all' && inst.state !== stateFilter) return false
+    if (countryFilter !== 'all' && inst.country !== countryFilter) return false
     if (fieldFilter !== 'all' && !inst.fields.includes(fieldFilter)) return false
     return true
   })
 
   const clearFilters = () => {
     setSearch('')
-    setTvodOnly(false)
-    setEnglishOnly(false)
+    setEpsrcOnly(false)
+    setCommonwealthOnly(false)
     setWatchlistedOnly(false)
     setTypeFilter('all')
-    setStateFilter('all')
+    setCountryFilter('all')
     setFieldFilter('all')
   }
 
-  const hasFilters = search || tvodOnly || englishOnly || watchlistedOnly || typeFilter !== 'all' || stateFilter !== 'all' || fieldFilter !== 'all'
+  const hasFilters = search || epsrcOnly || commonwealthOnly || watchlistedOnly || typeFilter !== 'all' || countryFilter !== 'all' || fieldFilter !== 'all'
 
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <Loader2 className="size-8 text-red-600 animate-spin" />
+        <Loader2 className="size-8 text-blue-600 animate-spin" />
       </div>
     )
   }
@@ -96,13 +96,13 @@ export default function UniversitiesTab({ toggleWatchlist, isWatchlisted }: Univ
             value={search}
             onChange={(e) => { setSearch(e.target.value); setVisibleCount(12) }}
             placeholder="Search institutions, cities, fields..."
-            className="w-full h-10 pl-10 pr-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-sm text-gray-900 dark:text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+            className="w-full h-10 pl-10 pr-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-sm text-gray-900 dark:text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
         </div>
         <Button
           variant="outline"
           onClick={() => setShowFilters(!showFilters)}
-          className={`h-10 px-3 ${showFilters ? 'border-red-500 text-red-600' : ''}`}
+          className={`h-10 px-3 ${showFilters ? 'border-blue-500 text-blue-600' : ''}`}
         >
           <Filter className="size-4" />
         </Button>
@@ -118,12 +118,12 @@ export default function UniversitiesTab({ toggleWatchlist, isWatchlisted }: Univ
         <div className="p-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 space-y-3">
           <div className="flex flex-wrap gap-4">
             <div className="flex items-center gap-2">
-              <Switch checked={tvodOnly} onCheckedChange={setTvodOnly} />
-              <span className="text-sm text-gray-700 dark:text-gray-300">TVöD Funded</span>
+              <Switch checked={epsrcOnly} onCheckedChange={setEpsrcOnly} />
+              <span className="text-sm text-gray-700 dark:text-gray-300">EPSRC Funded</span>
             </div>
             <div className="flex items-center gap-2">
-              <Switch checked={englishOnly} onCheckedChange={setEnglishOnly} />
-              <span className="text-sm text-gray-700 dark:text-gray-300">English Only</span>
+              <Switch checked={commonwealthOnly} onCheckedChange={setCommonwealthOnly} />
+              <span className="text-sm text-gray-700 dark:text-gray-300">Commonwealth Eligible</span>
             </div>
             <div className="flex items-center gap-2">
               <Switch checked={watchlistedOnly} onCheckedChange={setWatchlistedOnly} />
@@ -138,18 +138,16 @@ export default function UniversitiesTab({ toggleWatchlist, isWatchlisted }: Univ
             >
               <option value="all">All Types</option>
               <option value="University">University</option>
-              <option value="Max Planck Institute">Max Planck Institute</option>
-              <option value="Helmholtz Center">Helmholtz Center</option>
-              <option value="Leibniz Institute">Leibniz Institute</option>
+              <option value="Research Institute">Research Institute</option>
             </select>
             <select
-              value={stateFilter}
-              onChange={(e) => setStateFilter(e.target.value)}
+              value={countryFilter}
+              onChange={(e) => setCountryFilter(e.target.value)}
               className="h-9 px-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm text-gray-700 dark:text-gray-300"
             >
-              <option value="all">All States</option>
-              {states.map((s) => (
-                <option key={s} value={s}>{s}</option>
+              <option value="all">All Countries</option>
+              {countries.map((c) => (
+                <option key={c} value={c}>{c}</option>
               ))}
             </select>
             <select

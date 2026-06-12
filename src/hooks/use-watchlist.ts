@@ -2,7 +2,7 @@
 
 import { useState, useCallback } from 'react'
 
-const WATCHLIST_KEY = 'japan-phd-finder-watchlist'
+const WATCHLIST_KEY = 'uk-phd-finder-watchlist'
 
 function loadWatchlistFromStorage(): string[] {
   if (typeof window === 'undefined') return []

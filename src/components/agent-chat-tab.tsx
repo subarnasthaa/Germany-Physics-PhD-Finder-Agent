@@ -86,33 +86,33 @@ const PROVIDERS = [
 
 const suggestedPrompts = [
   {
-    label: 'Best universities for astrophysics',
+    label: 'Best UK universities for astrophysics',
     icon: BookOpen,
-    prompt: 'What are the best Japanese universities for astrophysics PhD?',
+    prompt: 'What are the best UK universities for astrophysics PhD for a Nepali student?',
   },
   {
-    label: 'MEXT scholarship guide',
+    label: 'Commonwealth Scholarship guide',
     icon: Award,
-    prompt: 'How can Nepali students get MEXT scholarship for a PhD in physics in Japan?',
+    prompt: 'How can Nepali students get Commonwealth Scholarship for a PhD in physics in the UK? Walk me through the UGC Nepal process.',
   },
   {
-    label: 'MEXT stipend details',
+    label: 'EPSRC funding details',
     icon: FileText,
-    prompt: 'What is the MEXT scholarship stipend and what does it cover for PhD students in Japan?',
+    prompt: 'What is the EPSRC DTP studentship and how much stipend do PhD students get in the UK? Can international students apply?',
   },
   {
-    label: 'About RIKEN JRA',
+    label: 'About RAL & NPL',
     icon: Globe,
-    prompt: 'Tell me about RIKEN Junior Research Associate program for physics PhD students',
+    prompt: 'Tell me about Rutherford Appleton Laboratory and National Physical Laboratory PhD programs for physics students',
   },
   {
-    label: 'Application timeline',
+    label: 'IELTS requirements & tips',
     icon: HelpCircle,
-    prompt: 'What is the application timeline for April 2026 admission to Japanese PhD programs?',
+    prompt: 'What IELTS score do I need for UK PhD programs in physics? Give me a breakdown by university tier.',
   },
 ]
 
-const STORAGE_KEY = 'japan-phd-finder-ai-settings'
+const STORAGE_KEY = 'uk-phd-finder-ai-settings'
 
 function loadSettings(): AISettings | null {
   if (typeof window === 'undefined') return null
@@ -479,10 +479,10 @@ export default function AgentChatTab({ watchlistedIds }: AgentChatTabProps) {
               <Bot className="size-8 text-blue-600 dark:text-blue-400" />
             </div>
             <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1">
-              Japan Physics PhD Finder Agent
+              UK Physics PhD Finder Agent
             </h3>
             <p className="text-sm text-gray-500 dark:text-gray-400 max-w-md mb-2">
-              I can help you find the best PhD programs in Japan, explain MEXT scholarships, RIKEN JRA, and guide you through the application process.
+              I can help you find the best PhD programs in the UK, explain Commonwealth & EPSRC scholarships, RAL/NPL, and guide you through the application process.
             </p>
 
             {/* API Key Status */}
@@ -621,7 +621,7 @@ export default function AgentChatTab({ watchlistedIds }: AgentChatTabProps) {
             onChange={(e) => setInput(e.target.value)}
             placeholder={
               settings?.apiKey
-                ? 'Ask about PhD programs, MEXT, RIKEN, JSPS...'
+                ? 'Ask about PhD programs, Commonwealth, EPSRC, IELTS...'
                 : 'Configure API key to start chatting...'
             }
             disabled={loading || !settings?.apiKey}
