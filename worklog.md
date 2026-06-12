@@ -703,3 +703,84 @@ Converted the existing UK Physics PhD Finder app to a comprehensive Australia Ph
 - Vercel: https://my-project-xi-bice.vercel.app
 - Lint: ✅ Passed
 - Verification: ✅ Confirmed "Australia Physics PhD Finder" in production
+
+## Task 5: New Zealand Physics PhD Finder Agent
+
+**Date:** 2026-03-05
+**Agent:** nz-phd-finder-agent
+**Status:** ✅ Completed
+
+### What was done:
+Converted the existing Australia Physics PhD Finder to a complete New Zealand Physics PhD Finder Agent with the following changes:
+
+#### 1. Static Data (`src/lib/static-data.ts`)
+- Complete rewrite with NZ-specific `Institution` interface
+- NZ-specific fields: `country: 'North Island' | 'South Island'`, `internationalTuitionNzd`, `funding.doctoralScholarshipAvailable`, `funding.manaakiNzEligible`, `funding.macdiarmidNode`, `funding.doctoralStipendNzd`
+- **8 NZ Universities** (ALL of them):
+  1. University of Auckland (largest, quantum optics, photonics)
+  2. Victoria University of Wellington (condensed matter, MacDiarmid HQ)
+  3. University of Canterbury (astrophysics, Mt John Observatory)
+  4. University of Otago (quantum optics, MacDiarmid node)
+  5. Massey University (applied physics, MacDiarmid node)
+  6. AUT (applied physics, medical physics)
+  7. Lincoln University (environmental physics)
+  8. University of Waikato (materials, MacDiarmid node)
+- **3 Research Institutes**: GNS Science, MacDiarmid Institute, Callaghan Innovation
+- **16 Scholarships** across categories: Manaaki NZ (3), Government (2), University Doctoral (8), MacDiarmid Institute (2), NZ High Commission Nepal (2)
+- `searchScholarships` function
+
+#### 2. Header (`src/components/header.tsx`)
+- Title: "New Zealand Physics PhD Finder"
+- Indigo/purple theme (bg-indigo-700 active tabs, indigo-600 icons)
+- Tabs: Dashboard, Institutions, MacDiarmid & GNS, Manaaki NZ Guide, Watchlist, Alerts, AI Agent
+- Countdown: Semester 1 Feb 2026
+
+#### 3. Layout (`src/app/layout.tsx`)
+- NZ metadata with Manaaki NZ, MacDiarmid, GNS keywords
+
+#### 4. Page (`src/app/page.tsx`)
+- NZ footer text
+
+#### 5. Dashboard (`src/components/dashboard-tab.tsx`)
+- "Kia Ora! 🇳🇿" greeting
+- Indigo/purple theme replacing all teal/green
+- Stats: Total Universities, MacDiarmid Nodes, Doctoral Scholarships, Manaaki NZ Eligible
+- "North Island vs South Island" chart
+
+#### 6. Manaaki NZ Guide (`src/components/daad-guide-tab.tsx`)
+- Renamed from Australia Awards Guide to Manaaki NZ Guide
+- Manaaki New Zealand Scholarship section (full details)
+- University doctoral scholarships section
+- NZ High Commission Nepal contact (Bansbari Heights, Kathmandu)
+- Rolling admissions timeline
+- IELTS 6.5 requirement
+- 9 NZ-specific FAQs
+
+#### 7. MacDiarmid & GNS Tab (`src/components/mpi-labs-tab.tsx`)
+- Renamed from CSIRO & ANSTO to MacDiarmid & GNS
+- MacDiarmid Institute nodes + GNS Science + Callaghan Innovation
+- Indigo/purple theme
+- NZD currency
+
+#### 8. Agent API (`src/app/api/agent/route.ts`)
+- NZ system prompt covering Manaaki NZ, MacDiarmid, GNS, doctoral scholarships
+- NZD currency, IELTS requirements, NZ High Commission Nepal
+
+#### 9. Storage Keys
+- `use-watchlist.ts`: `nz-phd-finder-watchlist`
+- `agent-chat-tab.tsx`: `nz-phd-finder-ai-settings`
+
+#### 10. All Components Updated
+- `institution-card.tsx`: NZD currency, Manaaki NZ + MacDiarmid badges, indigo theme
+- `universities-tab.tsx`: Manaaki NZ Eligible filter, Island filter
+- `watchlist-tab.tsx`: NZD currency, NZ badges, indigo theme
+- `alerts-tab.tsx`: Indigo/purple theme, Doctoral + Manaaki badges
+- `stats/route.ts`: NZ-specific stats (macdiarmidNodes, manaakiNzEligible, doctoralScholarships)
+- `alerts/route.ts`: Uses `country` field (North/South Island)
+
+### Deployment
+- GitHub: https://github.com/subarnasthaa/NewZealand-Physics-PhD-Finder-Agent
+- Vercel: https://my-project-xi-bice.vercel.app
+- Lint: ✅ Pass
+- Build: ✅ Success
+- Verification: ✅ "New Zealand Physics PhD Finder" confirmed in production HTML
