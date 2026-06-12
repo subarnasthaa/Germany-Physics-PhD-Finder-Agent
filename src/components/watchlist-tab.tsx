@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Star, Trash2, Search, MapPin, Banknote, Languages } from 'lucide-react'
+import { Star, Trash2, MapPin, Banknote, Languages } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -21,10 +21,12 @@ interface Institution {
   languageInstruction: string
   englishLabLife: boolean
   funding: {
-    epsrcDtp: boolean
-    commonwealthEligible: boolean
+    rtpAvailable: boolean
+    australiaAwardsEligible: boolean
+    csiroTopup: boolean
     universityScholarships: boolean
   }
+  go8: boolean
   notableProfessors: string
   notesForNepali: string
 }
@@ -62,7 +64,7 @@ export default function WatchlistTab({ watchlistedIds, toggleWatchlist, onNaviga
         <p className="text-sm text-gray-500 dark:text-gray-400 mb-4 text-center">
           Star institutions you&apos;re interested in to track their deadlines and funding info
         </p>
-        <Button onClick={() => onNavigate('universities')} className="bg-blue-600 hover:bg-blue-700 text-white">
+        <Button onClick={() => onNavigate('universities')} className="bg-teal-600 hover:bg-teal-700 text-white">
           Browse Institutions
         </Button>
       </div>
@@ -92,8 +94,10 @@ export default function WatchlistTab({ watchlistedIds, toggleWatchlist, onNaviga
       <div className="grid gap-4 md:grid-cols-2">
         {filtered.map((inst) => {
           const typeColor = inst.type === 'Research Institute'
-            ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'
-            : 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'
+            ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
+            : inst.go8
+            ? 'bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-400'
+            : 'bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-400'
 
           return (
             <Card key={inst.id} className="hover:shadow-md transition-shadow">
@@ -108,7 +112,7 @@ export default function WatchlistTab({ watchlistedIds, toggleWatchlist, onNaviga
                   </div>
                   <button
                     onClick={() => toggleWatchlist(inst.id)}
-                    className="p-1.5 rounded text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-950/20 transition-colors"
+                    className="p-1.5 rounded text-teal-500 hover:bg-teal-50 dark:hover:bg-teal-950/20 transition-colors"
                   >
                     <Trash2 className="size-4" />
                   </button>
@@ -116,16 +120,16 @@ export default function WatchlistTab({ watchlistedIds, toggleWatchlist, onNaviga
 
                 <div className="flex flex-wrap gap-1.5 mb-3">
                   <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${typeColor}`}>
-                    {inst.type === 'Research Institute' ? 'Research Lab' : 'University'}
+                    {inst.type === 'Research Institute' ? 'Research Lab' : inst.go8 ? 'Go8' : 'University'}
                   </span>
-                  {inst.funding?.epsrcDtp && (
+                  {inst.funding?.rtpAvailable && (
                     <Badge variant="secondary" className="text-xs bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">
-                      EPSRC DTP
+                      RTP
                     </Badge>
                   )}
-                  {inst.funding?.commonwealthEligible && (
+                  {inst.funding?.australiaAwardsEligible && (
                     <Badge variant="secondary" className="text-xs bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400">
-                      Commonwealth
+                      Australia Awards
                     </Badge>
                   )}
                   <Badge variant="secondary" className="text-xs bg-sky-100 text-sky-700 dark:bg-sky-900/30 dark:text-sky-400">
@@ -136,10 +140,10 @@ export default function WatchlistTab({ watchlistedIds, toggleWatchlist, onNaviga
                 <div className="space-y-1.5 text-xs text-gray-600 dark:text-gray-400">
                   <div className="flex items-center gap-2">
                     <Banknote className="size-3.5 text-green-500" />
-                    <span>{inst.monthlyGbp ? `£${inst.monthlyGbp.toLocaleString()}/month` : 'Stipend varies'}</span>
+                    <span>{inst.monthlyGbp ? `AUD $${inst.monthlyGbp.toLocaleString()}/month` : 'Stipend varies'}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Languages className="size-3.5 text-blue-500" />
+                    <Languages className="size-3.5 text-teal-500" />
                     <span>{inst.languageInstruction}</span>
                   </div>
                   <p className="text-gray-500">Deadline: {inst.deadline || 'Rolling'}</p>

@@ -54,7 +54,7 @@ export default function AlertsTab({ onNavigate }: AlertsTabProps) {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <Clock className="size-8 text-blue-600 animate-pulse" />
+        <Clock className="size-8 text-teal-600 animate-pulse" />
       </div>
     )
   }
@@ -63,17 +63,17 @@ export default function AlertsTab({ onNavigate }: AlertsTabProps) {
     <div className="space-y-4 p-4 md:p-6">
       {/* Summary Cards */}
       <div className="grid grid-cols-3 gap-3">
-        <Card className="border-blue-200 dark:border-blue-800/50">
+        <Card className="border-teal-200 dark:border-teal-800/50">
           <CardContent className="p-3 text-center">
-            <AlertTriangle className="size-5 text-blue-500 mx-auto mb-1" />
-            <p className="text-xl font-bold text-blue-600">{urgentCount}</p>
+            <AlertTriangle className="size-5 text-teal-500 mx-auto mb-1" />
+            <p className="text-xl font-bold text-teal-600">{urgentCount}</p>
             <p className="text-xs text-gray-500">Urgent (&lt;30d)</p>
           </CardContent>
         </Card>
-        <Card className="border-blue-200 dark:border-blue-800/50">
+        <Card className="border-teal-200 dark:border-teal-800/50">
           <CardContent className="p-3 text-center">
-            <Clock className="size-5 text-blue-500 mx-auto mb-1" />
-            <p className="text-xl font-bold text-blue-600">{upcomingCount}</p>
+            <Clock className="size-5 text-teal-500 mx-auto mb-1" />
+            <p className="text-xl font-bold text-teal-600">{upcomingCount}</p>
             <p className="text-xs text-gray-500">Upcoming (30-60d)</p>
           </CardContent>
         </Card>
@@ -116,9 +116,9 @@ export default function AlertsTab({ onNavigate }: AlertsTabProps) {
               key={alert.id}
               className={`border-l-4 ${
                 alert.daysLeft < 30
-                  ? 'border-l-blue-500'
+                  ? 'border-l-teal-500'
                   : alert.daysLeft < 60
-                  ? 'border-l-blue-500'
+                  ? 'border-l-teal-500'
                   : 'border-l-green-500'
               }`}
             >
@@ -136,9 +136,9 @@ export default function AlertsTab({ onNavigate }: AlertsTabProps) {
                   </Badge>
                 </div>
                 <div className="mt-2 flex flex-wrap gap-1.5 text-xs">
-                  {alert.contractType?.includes('EPSRC') && (
+                  {alert.contractType?.includes('RTP') && (
                     <Badge variant="secondary" className="bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">
-                      EPSRC
+                      RTP
                     </Badge>
                   )}
                   <Badge variant="secondary" className="bg-sky-100 text-sky-700 dark:bg-sky-900/30 dark:text-sky-400">
@@ -147,7 +147,7 @@ export default function AlertsTab({ onNavigate }: AlertsTabProps) {
                 </div>
                 <p className="text-xs text-gray-500 mt-2">
                   Deadline: {alert.deadline}
-                  {alert.monthlyGbp && ` | £${alert.monthlyGbp.toLocaleString()}/mo`}
+                  {alert.monthlyGbp && ` | AUD $${alert.monthlyGbp.toLocaleString()}/mo`}
                 </p>
               </CardContent>
             </Card>

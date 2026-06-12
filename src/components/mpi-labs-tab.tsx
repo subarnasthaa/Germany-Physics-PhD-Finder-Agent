@@ -63,10 +63,10 @@ export default function MPILabsTab({ onNavigate }: MPILabsTabProps) {
   })
 
   const typeColors: Record<string, string> = {
-    'Research Institute': 'from-blue-600 to-blue-700',
+    'Research Institute': 'from-green-600 to-teal-700',
   }
   const typeBadgeColors: Record<string, string> = {
-    'Research Institute': 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400',
+    'Research Institute': 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400',
   }
   const typeLabels: Record<string, string> = {
     'Research Institute': 'Research Lab',
@@ -75,7 +75,7 @@ export default function MPILabsTab({ onNavigate }: MPILabsTabProps) {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <Loader2 className="size-8 text-blue-600 animate-spin" />
+        <Loader2 className="size-8 text-teal-600 animate-spin" />
       </div>
     )
   }
@@ -83,12 +83,12 @@ export default function MPILabsTab({ onNavigate }: MPILabsTabProps) {
   return (
     <div className="space-y-6 p-4 md:p-6">
       {/* Header */}
-      <Card className="border-0 bg-gradient-to-r from-blue-600 to-blue-700 text-white overflow-hidden">
+      <Card className="border-0 bg-gradient-to-r from-teal-600 to-green-700 text-white overflow-hidden">
         <CardContent className="p-6 md:p-8">
-          <h2 className="text-2xl font-bold mb-1">🔬 UK Research Laboratories</h2>
-          <p className="text-blue-100 text-sm max-w-xl">
-            UK&apos;s world-renowned national research laboratories — Rutherford Appleton Laboratory (RAL)
-            and National Physical Laboratory (NPL) offer excellent PhD studentships with STFC/NPL funding.
+          <h2 className="text-2xl font-bold mb-1">🔬 CSIRO & ANSTO Research Laboratories</h2>
+          <p className="text-teal-100 text-sm max-w-xl">
+            Australia&apos;s world-renowned national research facilities — CSIRO (Commonwealth Scientific and Industrial Research Organisation)
+            and ANSTO (Australian Nuclear Science and Technology Organisation) offer excellent PhD opportunities with top-up scholarships!
             Students are registered at partner universities while working at these world-class facilities!
           </p>
         </CardContent>
@@ -103,7 +103,7 @@ export default function MPILabsTab({ onNavigate }: MPILabsTabProps) {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search labs, cities, fields..."
-            className="w-full h-10 pl-10 pr-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full h-10 pl-10 pr-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
           />
         </div>
       </div>
@@ -112,11 +112,11 @@ export default function MPILabsTab({ onNavigate }: MPILabsTabProps) {
       {filtered.length > 0 && (
         <div>
           {/* Type Header */}
-          <div className="rounded-lg bg-gradient-to-r from-blue-600 to-blue-700 text-white p-4 mb-3">
+          <div className="rounded-lg bg-gradient-to-r from-green-600 to-teal-700 text-white p-4 mb-3">
             <div className="flex items-center gap-3">
               <FlaskConical className="size-6" />
               <div>
-                <h3 className="text-lg font-bold">National Research Laboratories</h3>
+                <h3 className="text-lg font-bold">CSIRO Divisions & ANSTO</h3>
                 <p className="text-sm opacity-80">{filtered.length} labs found</p>
               </div>
             </div>
@@ -153,7 +153,7 @@ export default function MPILabsTab({ onNavigate }: MPILabsTabProps) {
                     <div className="mt-2 flex items-center gap-3 text-xs text-gray-500">
                       <span className="flex items-center gap-1">
                         <Banknote className="size-3" />
-                        {inst.monthlyGbp ? `£${inst.monthlyGbp.toLocaleString()}/mo` : 'Varies'}
+                        {inst.monthlyGbp ? `AUD $${inst.monthlyGbp.toLocaleString()}/mo` : 'Varies'}
                       </span>
                       <span>{inst.languageInstruction}</span>
                       {inst.englishLabLife && (
@@ -165,7 +165,7 @@ export default function MPILabsTab({ onNavigate }: MPILabsTabProps) {
 
                     <button
                       onClick={() => setExpandedId(isExpanded ? null : inst.id)}
-                      className="w-full mt-2 flex items-center justify-center gap-1 text-xs text-blue-600 hover:text-blue-700"
+                      className="w-full mt-2 flex items-center justify-center gap-1 text-xs text-teal-600 hover:text-teal-700"
                     >
                       {isExpanded ? <ChevronUp className="size-3" /> : <ChevronDown className="size-3" />}
                       {isExpanded ? 'Less' : 'Details'}
@@ -174,17 +174,17 @@ export default function MPILabsTab({ onNavigate }: MPILabsTabProps) {
                     {isExpanded && (
                       <div className="mt-2 pt-2 border-t border-gray-200 dark:border-gray-700 space-y-1.5 text-xs">
                         {inst.url && (
-                          <a href={inst.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-blue-600 hover:underline">
+                          <a href={inst.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-teal-600 hover:underline">
                             <Globe className="size-3" /> {inst.url}
                           </a>
                         )}
-                        {inst.department && <p><span className="text-gray-500">Lab:</span> {inst.department}</p>}
+                        {inst.department && <p><span className="text-gray-500">Division:</span> {inst.department}</p>}
                         {inst.contractType && <p><span className="text-gray-500">Funding:</span> {inst.contractType}</p>}
                         {inst.phdType && <p><span className="text-gray-500">PhD Type:</span> {inst.phdType}</p>}
                         {inst.deadline && <p><span className="text-gray-500">Deadline:</span> {inst.deadline}</p>}
                         {inst.notableProfessors && <p><span className="text-gray-500">Notable:</span> {inst.notableProfessors}</p>}
                         {inst.notesForNepali && (
-                          <p className="p-1.5 rounded bg-blue-50 dark:bg-blue-950/20 text-blue-700 dark:text-blue-300">
+                          <p className="p-1.5 rounded bg-teal-50 dark:bg-teal-950/20 text-teal-700 dark:text-teal-300">
                             🇳🇵 {inst.notesForNepali}
                           </p>
                         )}
@@ -205,25 +205,25 @@ export default function MPILabsTab({ onNavigate }: MPILabsTabProps) {
         </div>
       )}
 
-      {/* STFC Studentship Info Card */}
-      <Card className="border-blue-200 dark:border-blue-800/50">
+      {/* CSIRO/ANSTO Info Card */}
+      <Card className="border-teal-200 dark:border-teal-800/50">
         <CardContent className="p-4 md:p-6">
           <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
-            <Atom className="size-4 text-blue-600" />
-            About STFC Studentships at UK Labs
+            <Atom className="size-4 text-teal-600" />
+            About CSIRO & ANSTO Studentships
           </h3>
           <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
-            The Science & Technology Facilities Council (STFC) funds PhD studentships at Rutherford Appleton Laboratory (RAL)
-            and other national facilities. Students are registered at partner universities (Oxford, UCL, Edinburgh, etc.)
-            but conduct their research at RAL using world-class facilities like the ISIS Neutron & Muon Source,
-            Diamond Light Source, and the Central Laser Facility. These studentships provide full tuition coverage
-            and a tax-free stipend of £19,237/year. Similarly, NPL (National Physical Laboratory) offers studentships
-            in quantum metrology, optical physics, and materials science with enhanced stipends.
-            Apply through the partner university or directly through STFC calls.
+            CSIRO (Commonwealth Scientific and Industrial Research Organisation) is Australia&apos;s national science agency,
+            offering PhD top-up scholarships of AUD $7,000-10,000/year on top of the university RTP stipend across its divisions
+            including Astronomy & Space Science, Energy, Manufacturing, Data61, Oceans & Atmosphere, and Mineral Resources.
+            Students are registered at partner universities (ANU, Melbourne, UNSW, UQ, etc.) but conduct their research at CSIRO facilities.
+            ANSTO (Australian Nuclear Science and Technology Organisation) operates the OPAL research reactor and the Australian Centre
+            for Neutron Scattering, offering similar postgraduate scholarships. Both provide access to world-class facilities
+            and direct industry research experience.
           </p>
           <button
             onClick={() => onNavigate('universities')}
-            className="mt-3 text-xs text-blue-600 hover:text-blue-700 font-medium"
+            className="mt-3 text-xs text-teal-600 hover:text-teal-700 font-medium"
           >
             Browse all institutions →
           </button>

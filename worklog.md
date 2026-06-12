@@ -580,3 +580,100 @@ Created comprehensive static data file at `/home/z/my-project/src/lib/static-dat
 - ESLint: 0 errors, 0 warnings ✅
 - TypeScript: Array.from() used for Set iteration (ES2017 compat) ✅
 - 82 institutions + 18 scholarships = 100 total data entries ✅
+
+---
+
+## Task 3: UK Physics PhD Finder - Complete App Conversion
+
+**Date:** 2026-03-05
+**Agent:** uk-phd-finder-agent
+**Status:** ✅ Completed
+
+### What was done:
+Converted the existing Japan/Germany Physics PhD Finder app to a UK Physics PhD Finder for Nepali MSc Physics students from Tribhuvan University.
+
+### Files Modified (16 files):
+
+1. **`src/lib/static-data.ts`** - Complete rewrite with UK data:
+   - New `Institution` interface with UK-specific fields: country ('England'|'Scotland'|'Wales'|'Northern Ireland'), type ('University'|'Research Institute'), funding (epsrcDtp, commonwealthEligible, universityScholarships), ieltsMinimum, internationalTuitionGbp, octoberIntake, januaryIntake
+   - 37 institutions: 35 universities + 2 research institutes (RAL, NPL)
+   - Universities: Oxford, Cambridge, Imperial, UCL, Edinburgh, Manchester, Bristol, Warwick, Durham, St Andrews, Glasgow, Birmingham, Leeds, Sheffield, Nottingham, Southampton, Liverpool, Cardiff, Queen Mary, King's College, Sussex, York, Lancaster, Bath, Exeter, Surrey, Royal Holloway, QUB, Strathclyde, Heriot-Watt, Dundee, Kent, Reading, Aberdeen, Hull, Open University
+   - Research Institutes: Rutherford Appleton Laboratory (RAL), National Physical Laboratory (NPL)
+   - 15 scholarships across 6 categories: Commonwealth (3), EPSRC (3), STFC (1), Newton Fund (1), British Council (1), Chevening (1), University-Specific (4), UGC Nepal (1)
+   - `searchScholarships()` function for filtering
+
+2. **`src/components/header.tsx`** - UK theme:
+   - Title: "UK Physics PhD Finder"
+   - Subtitle: "For Nepali MSc Physics Students | Tribhuvan University"
+   - Countdown: October 2026 intake deadline
+   - Tab labels: Dashboard, Institutions, Research Labs, Commonwealth Guide, Watchlist, Alerts, AI Agent
+   - Blue theme (bg-blue-700 active tabs, blue-600 icons)
+
+3. **`src/app/layout.tsx`** - UK metadata with Commonwealth, EPSRC, FindAPhD keywords
+
+4. **`src/app/page.tsx`** - UK footer
+
+5. **`src/components/dashboard-tab.tsx`** - Blue theme with UK stats:
+   - "Hello! 🇬🇧" greeting
+   - Stats: Total Universities, Research Labs, EPSRC Funded, Commonwealth Eligible
+   - Blue gradient banner, blue stats cards
+   - Quick links: Commonwealth Guide, RAL & NPL Research Labs
+
+6. **`src/components/daad-guide-tab.tsx`** - Commonwealth Guide:
+   - Commonwealth Scholarship section (via UGC Nepal)
+   - EPSRC DTP section
+   - British High Commission Nepal contact (Pulchowk, Lalitpur)
+   - UK application timeline for October 2026
+   - IELTS requirement (6.5 minimum)
+   - EPSRC Stipend explanation (£19,237/year)
+   - FAQ about UK PhDs (8 questions)
+   - Full blue theme
+
+7. **`src/components/mpi-labs-tab.tsx`** - Research Labs tab:
+   - Rutherford Appleton Laboratory (RAL)
+   - National Physical Laboratory (NPL)
+   - STFC Studentship info card
+   - Blue theme
+
+8. **`src/app/api/agent/route.ts`** - UK system prompt:
+   - Knowledge of 35+ UK universities, RAL, NPL
+   - EPSRC DTP/CDT, Commonwealth, STFC, Chevening, Newton Fund
+   - IELTS requirements, FindAPhD, UGC Nepal process
+   - UK Tier 4 visa, IHS, SUPA network
+
+9. **`src/hooks/use-watchlist.ts`** - STORAGE_KEY = 'uk-phd-finder-watchlist'
+
+10. **`src/components/agent-chat-tab.tsx`** - UK prompts:
+    - STORAGE_KEY = 'uk-phd-finder-ai-settings'
+    - Title: "UK Physics PhD Finder Agent"
+    - Prompts about Commonwealth, EPSRC, IELTS, RAL/NPL
+
+11. **`src/components/institution-card.tsx`** - Blue theme:
+    - Type badges: University / Research Lab
+    - EPSRC DTP and Commonwealth badges
+    - £ currency instead of €/¥
+    - IELTS, tuition, intake info in expanded view
+    - Blue notes section
+
+12. **`src/components/universities-tab.tsx`** - Blue theme:
+    - EPSRC Funded filter switch
+    - Commonwealth Eligible filter switch
+    - Country filter (England, Scotland, Wales, Northern Ireland)
+
+13. **`src/components/watchlist-tab.tsx`** - Blue theme with UK badges
+
+14. **`src/components/alerts-tab.tsx`** - Blue theme with EPSRC badges
+
+15. **`src/app/api/stats/route.ts`** - UK stats:
+    - Total Universities, Research Labs, Commonwealth Eligible, EPSRC Funded
+    - Top fields and top countries
+
+16. **`src/app/api/alerts/route.ts`** - UK alerts with country field
+
+### Verification:
+- ESLint: 0 errors, 0 warnings ✅
+- Vercel deployment: Successful ✅
+- Production URL: https://my-project-xi-bice.vercel.app ✅
+- GitHub: https://github.com/subarnasthaa/UK-Physics-PhD-Finder-Agent ✅
+- Title verified in HTML: "UK Physics PhD Finder - For Nepali Students" ✅
+- 37 institutions + 15 scholarships ✅

@@ -17,15 +17,15 @@ export default function UniversitiesTab({ toggleWatchlist, isWatchlisted }: Univ
   const [institutions, setInstitutions] = useState<Institution[]>([])
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
-  const [epsrcOnly, setEpsrcOnly] = useState(false)
-  const [commonwealthOnly, setCommonwealthOnly] = useState(false)
+  const [rtpOnly, setRtpOnly] = useState(false)
+  const [australiaAwardsOnly, setAustraliaAwardsOnly] = useState(false)
   const [watchlistedOnly, setWatchlistedOnly] = useState(false)
   const [typeFilter, setTypeFilter] = useState('all')
-  const [countryFilter, setCountryFilter] = useState('all')
+  const [stateFilter, setStateFilter] = useState('all')
   const [fieldFilter, setFieldFilter] = useState('all')
   const [showFilters, setShowFilters] = useState(false)
   const [visibleCount, setVisibleCount] = useState(12)
-  const [countries, setCountries] = useState<string[]>([])
+  const [states, setStates] = useState<string[]>([])
   const [fields, setFields] = useState<string[]>([])
 
   useEffect(() => {
@@ -33,8 +33,8 @@ export default function UniversitiesTab({ toggleWatchlist, isWatchlisted }: Univ
       .then((r) => r.json())
       .then((data) => {
         setInstitutions(data)
-        const countrySet = new Set<string>(data.map((u: Institution) => u.country))
-        setCountries(Array.from(countrySet).sort())
+        const stateSet = new Set<string>(data.map((u: Institution) => u.country))
+        setStates(Array.from(stateSet).sort())
         const fieldSet = new Set<string>()
         data.forEach((u: Institution) => {
           u.fields.split('|').forEach((f: string) => fieldSet.add(f.trim()))
@@ -56,31 +56,31 @@ export default function UniversitiesTab({ toggleWatchlist, isWatchlisted }: Univ
         inst.country.toLowerCase().includes(q)
       if (!match) return false
     }
-    if (epsrcOnly && !inst.funding?.epsrcDtp) return false
-    if (commonwealthOnly && !inst.funding?.commonwealthEligible) return false
+    if (rtpOnly && !inst.funding?.rtpAvailable) return false
+    if (australiaAwardsOnly && !inst.funding?.australiaAwardsEligible) return false
     if (watchlistedOnly && !isWatchlisted(inst.id)) return false
     if (typeFilter !== 'all' && inst.type !== typeFilter) return false
-    if (countryFilter !== 'all' && inst.country !== countryFilter) return false
+    if (stateFilter !== 'all' && inst.country !== stateFilter) return false
     if (fieldFilter !== 'all' && !inst.fields.includes(fieldFilter)) return false
     return true
   })
 
   const clearFilters = () => {
     setSearch('')
-    setEpsrcOnly(false)
-    setCommonwealthOnly(false)
+    setRtpOnly(false)
+    setAustraliaAwardsOnly(false)
     setWatchlistedOnly(false)
     setTypeFilter('all')
-    setCountryFilter('all')
+    setStateFilter('all')
     setFieldFilter('all')
   }
 
-  const hasFilters = search || epsrcOnly || commonwealthOnly || watchlistedOnly || typeFilter !== 'all' || countryFilter !== 'all' || fieldFilter !== 'all'
+  const hasFilters = search || rtpOnly || australiaAwardsOnly || watchlistedOnly || typeFilter !== 'all' || stateFilter !== 'all' || fieldFilter !== 'all'
 
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <Loader2 className="size-8 text-blue-600 animate-spin" />
+        <Loader2 className="size-8 text-teal-600 animate-spin" />
       </div>
     )
   }
@@ -96,13 +96,13 @@ export default function UniversitiesTab({ toggleWatchlist, isWatchlisted }: Univ
             value={search}
             onChange={(e) => { setSearch(e.target.value); setVisibleCount(12) }}
             placeholder="Search institutions, cities, fields..."
-            className="w-full h-10 pl-10 pr-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-sm text-gray-900 dark:text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full h-10 pl-10 pr-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-sm text-gray-900 dark:text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
           />
         </div>
         <Button
           variant="outline"
           onClick={() => setShowFilters(!showFilters)}
-          className={`h-10 px-3 ${showFilters ? 'border-blue-500 text-blue-600' : ''}`}
+          className={`h-10 px-3 ${showFilters ? 'border-teal-500 text-teal-600' : ''}`}
         >
           <Filter className="size-4" />
         </Button>
@@ -118,12 +118,12 @@ export default function UniversitiesTab({ toggleWatchlist, isWatchlisted }: Univ
         <div className="p-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 space-y-3">
           <div className="flex flex-wrap gap-4">
             <div className="flex items-center gap-2">
-              <Switch checked={epsrcOnly} onCheckedChange={setEpsrcOnly} />
-              <span className="text-sm text-gray-700 dark:text-gray-300">EPSRC Funded</span>
+              <Switch checked={rtpOnly} onCheckedChange={setRtpOnly} />
+              <span className="text-sm text-gray-700 dark:text-gray-300">RTP Funded</span>
             </div>
             <div className="flex items-center gap-2">
-              <Switch checked={commonwealthOnly} onCheckedChange={setCommonwealthOnly} />
-              <span className="text-sm text-gray-700 dark:text-gray-300">Commonwealth Eligible</span>
+              <Switch checked={australiaAwardsOnly} onCheckedChange={setAustraliaAwardsOnly} />
+              <span className="text-sm text-gray-700 dark:text-gray-300">Australia Awards</span>
             </div>
             <div className="flex items-center gap-2">
               <Switch checked={watchlistedOnly} onCheckedChange={setWatchlistedOnly} />
@@ -141,13 +141,13 @@ export default function UniversitiesTab({ toggleWatchlist, isWatchlisted }: Univ
               <option value="Research Institute">Research Institute</option>
             </select>
             <select
-              value={countryFilter}
-              onChange={(e) => setCountryFilter(e.target.value)}
+              value={stateFilter}
+              onChange={(e) => setStateFilter(e.target.value)}
               className="h-9 px-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm text-gray-700 dark:text-gray-300"
             >
-              <option value="all">All Countries</option>
-              {countries.map((c) => (
-                <option key={c} value={c}>{c}</option>
+              <option value="all">All States</option>
+              {states.map((s) => (
+                <option key={s} value={s}>{s}</option>
               ))}
             </select>
             <select

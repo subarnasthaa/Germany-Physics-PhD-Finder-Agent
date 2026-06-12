@@ -14,19 +14,19 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "UK Physics PhD Finder - For Nepali Students",
-  description: "Comprehensive guide for Nepali MSc Physics students from Tribhuvan University to find PhD programs in the UK. Explore universities, RAL, NPL, Commonwealth scholarships, EPSRC funding, and get AI-powered assistance.",
-  keywords: ["UK", "PhD", "Physics", "Commonwealth", "EPSRC", "RAL", "NPL", "Nepal", "Tribhuvan University", "FindAPhD", "British universities", "study in UK", "IELTS"],
-  authors: [{ name: "UK Physics PhD Finder" }],
+  title: "Australia Physics PhD Finder - For Nepali Students",
+  description: "Comprehensive guide for Nepali MSc Physics students from Tribhuvan University to find PhD programs in Australia. Explore Group of Eight universities, CSIRO, ANSTO, Australia Awards, RTP funding, and get AI-powered assistance.",
+  keywords: ["Australia", "PhD", "Physics", "Australia Awards", "RTP", "CSIRO", "ANSTO", "Nepal", "Tribhuvan University", "Go8", "Australian universities", "study in Australia", "IELTS"],
+  authors: [{ name: "Australia Physics PhD Finder" }],
   openGraph: {
-    title: "UK Physics PhD Finder",
-    description: "Find your PhD program in the UK - Guide for Nepali Physics students",
+    title: "Australia Physics PhD Finder",
+    description: "Find your Physics PhD in Australia - Guide for Nepali Physics students with Australia Awards, RTP, CSIRO",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "UK Physics PhD Finder",
-    description: "Find your PhD program in the UK - Guide for Nepali Physics students",
+    title: "Australia Physics PhD Finder",
+    description: "Find your Physics PhD in Australia - Guide for Nepali Physics students with Australia Awards, RTP, CSIRO",
   },
 };
 
@@ -44,5 +44,5 @@ export default function RootLayout({
         <Toaster />
       </body>
     </html>
-  );
+  )
 }
