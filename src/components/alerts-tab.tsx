@@ -55,7 +55,7 @@ export default function AlertsTab({ onNavigate }: AlertsTabProps) {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <Clock className="size-8 text-amber-600 animate-pulse" />
+        <Clock className="size-8 text-red-600 animate-pulse" />
       </div>
     )
   }
@@ -71,10 +71,10 @@ export default function AlertsTab({ onNavigate }: AlertsTabProps) {
             <p className="text-xs text-gray-500">Urgent (&lt;30d)</p>
           </CardContent>
         </Card>
-        <Card className="border-amber-200 dark:border-amber-800/50">
+        <Card className="border-red-200 dark:border-amber-800/50">
           <CardContent className="p-3 text-center">
-            <Clock className="size-5 text-amber-500 mx-auto mb-1" />
-            <p className="text-xl font-bold text-amber-600">{upcomingCount}</p>
+            <Clock className="size-5 text-red-500 mx-auto mb-1" />
+            <p className="text-xl font-bold text-red-600">{upcomingCount}</p>
             <p className="text-xs text-gray-500">Upcoming (30-60d)</p>
           </CardContent>
         </Card>
@@ -119,7 +119,7 @@ export default function AlertsTab({ onNavigate }: AlertsTabProps) {
                 alert.daysLeft < 30
                   ? 'border-l-red-500'
                   : alert.daysLeft < 60
-                  ? 'border-l-amber-500'
+                  ? 'border-l-red-500'
                   : 'border-l-green-500'
               }`}
             >

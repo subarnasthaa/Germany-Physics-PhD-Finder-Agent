@@ -14,19 +14,19 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Germany Physics PhD Finder - For Nepali Students",
-  description: "Comprehensive guide for Nepali MSc Physics students from Tribhuvan University to find PhD programs in Germany. Explore universities, Max Planck Institutes, Helmholtz Centers, DAAD scholarships, and get AI-powered assistance.",
-  keywords: ["Germany", "PhD", "Physics", "DAAD", "Max Planck", "Helmholtz", "Nepal", "Tribhuvan University", "TVöD", "IMPRS", "study in Germany", "German universities"],
-  authors: [{ name: "Germany Physics PhD Finder" }],
+  title: "Japan Physics PhD Finder - For Nepali Students",
+  description: "Comprehensive guide for Nepali MSc Physics students from Tribhuvan University to find PhD programs in Japan. Explore universities, RIKEN, KEK, NIMS, MEXT scholarships, and get AI-powered assistance.",
+  keywords: ["Japan", "PhD", "Physics", "MEXT", "RIKEN", "KEK", "Nepal", "Tribhuvan University", "JSPS", "Japanese universities", "study in Japan"],
+  authors: [{ name: "Japan Physics PhD Finder" }],
   openGraph: {
-    title: "Germany Physics PhD Finder",
-    description: "Find your PhD program in Germany - Guide for Nepali Physics students",
+    title: "Japan Physics PhD Finder",
+    description: "Find your PhD program in Japan - Guide for Nepali Physics students",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Germany Physics PhD Finder",
-    description: "Find your PhD program in Germany - Guide for Nepali Physics students",
+    title: "Japan Physics PhD Finder",
+    description: "Find your PhD program in Japan - Guide for Nepali Physics students",
   },
 };
 

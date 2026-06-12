@@ -43,9 +43,9 @@ export default function MPILabsTab({ onNavigate }: MPILabsTabProps) {
       .then((data: Institution[]) => {
         const filtered = data.filter(
           (inst) =>
-            inst.type === 'Max Planck Institute' ||
-            inst.type === 'Helmholtz Center' ||
-            inst.type === 'Leibniz Institute'
+            inst.type === 'Research Institute' ||
+            inst.type === 'Research Institute' ||
+            inst.type === 'Research Institute'
         )
         setInstitutions(filtered)
       })
@@ -74,21 +74,21 @@ export default function MPILabsTab({ onNavigate }: MPILabsTabProps) {
     return acc
   }, {})
 
-  const typeOrder = ['Max Planck Institute', 'Helmholtz Center', 'Leibniz Institute']
+  const typeOrder = ['Research Institute', 'Research Institute', 'Research Institute']
   const typeIcons: Record<string, typeof Atom> = {
-    'Max Planck Institute': Atom,
-    'Helmholtz Center': FlaskConical,
-    'Leibniz Institute': Building2,
+    'Research Institute': Atom,
+    'Research Institute': FlaskConical,
+    'Research Institute': Building2,
   }
   const typeColors: Record<string, string> = {
-    'Max Planck Institute': 'from-red-600 to-red-700',
-    'Helmholtz Center': 'from-blue-600 to-blue-700',
-    'Leibniz Institute': 'from-green-600 to-green-700',
+    'Research Institute': 'from-red-600 to-red-700',
+    'Research Institute': 'from-blue-600 to-blue-700',
+    'Research Institute': 'from-green-600 to-green-700',
   }
   const typeBadgeColors: Record<string, string> = {
-    'Max Planck Institute': 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400',
-    'Helmholtz Center': 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400',
-    'Leibniz Institute': 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400',
+    'Research Institute': 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400',
+    'Research Institute': 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400',
+    'Research Institute': 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400',
   }
 
   if (loading) {
@@ -102,7 +102,7 @@ export default function MPILabsTab({ onNavigate }: MPILabsTabProps) {
   return (
     <div className="space-y-6 p-4 md:p-6">
       {/* Header */}
-      <Card className="border-0 bg-gradient-to-r from-red-600 to-amber-600 text-white overflow-hidden">
+      <Card className="border-0 bg-gradient-to-r from-red-600 to-red-600 text-white overflow-hidden">
         <CardContent className="p-6 md:p-8">
           <h2 className="text-2xl font-bold mb-1">🔬 Research Institutes</h2>
           <p className="text-red-100 text-sm max-w-xl">
@@ -122,7 +122,7 @@ export default function MPILabsTab({ onNavigate }: MPILabsTabProps) {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search institutes, cities, fields..."
-            className="w-full h-10 pl-10 pr-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+            className="w-full h-10 pl-10 pr-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
           />
         </div>
         <select
@@ -131,9 +131,9 @@ export default function MPILabsTab({ onNavigate }: MPILabsTabProps) {
           className="h-10 px-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm"
         >
           <option value="all">All Types</option>
-          <option value="Max Planck Institute">Max Planck</option>
-          <option value="Helmholtz Center">Helmholtz</option>
-          <option value="Leibniz Institute">Leibniz</option>
+          <option value="Research Institute">Max Planck</option>
+          <option value="Research Institute">Helmholtz</option>
+          <option value="Research Institute">Leibniz</option>
         </select>
       </div>
 
@@ -168,7 +168,7 @@ export default function MPILabsTab({ onNavigate }: MPILabsTabProps) {
                     <CardContent className="p-4">
                       <div className="flex items-start gap-3">
                         <span className={`shrink-0 text-xs px-2 py-0.5 rounded-full font-medium ${typeBadgeColors[inst.type] || ''}`}>
-                          {inst.type === 'Max Planck Institute' ? 'MPI' : inst.type === 'Helmholtz Center' ? 'Helmholtz' : 'Leibniz'}
+                          {inst.type === 'Research Institute' ? 'MPI' : inst.type === 'Research Institute' ? 'Helmholtz' : 'Leibniz'}
                         </span>
                         <div className="flex-1 min-w-0">
                           <h4 className="text-sm font-bold text-gray-900 dark:text-white mb-1">{inst.name}</h4>
@@ -200,7 +200,7 @@ export default function MPILabsTab({ onNavigate }: MPILabsTabProps) {
 
                       <button
                         onClick={() => setExpandedId(isExpanded ? null : inst.id)}
-                        className="w-full mt-2 flex items-center justify-center gap-1 text-xs text-amber-600 hover:text-amber-700"
+                        className="w-full mt-2 flex items-center justify-center gap-1 text-xs text-red-600 hover:text-red-700"
                       >
                         {isExpanded ? <ChevronUp className="size-3" /> : <ChevronDown className="size-3" />}
                         {isExpanded ? 'Less' : 'Details'}
@@ -219,7 +219,7 @@ export default function MPILabsTab({ onNavigate }: MPILabsTabProps) {
                           {inst.deadline && <p><span className="text-gray-500">Deadline:</span> {inst.deadline}</p>}
                           {inst.notableProfessors && <p><span className="text-gray-500">Notable:</span> {inst.notableProfessors}</p>}
                           {inst.notesForNepali && (
-                            <p className="p-1.5 rounded bg-amber-50 dark:bg-amber-950/20 text-amber-700 dark:text-amber-300">
+                            <p className="p-1.5 rounded bg-red-50 dark:bg-red-950/20 text-red-700 dark:text-amber-300">
                               🇳🇵 {inst.notesForNepali}
                             </p>
                           )}
@@ -239,17 +239,17 @@ export default function MPILabsTab({ onNavigate }: MPILabsTabProps) {
         <CardContent className="p-4 md:p-6">
           <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
             <Atom className="size-4 text-red-600" />
-            About IMPRS Programs
+            About RIKEN JRA Program
           </h3>
           <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
-            International Max Planck Research Schools (IMPRS) are structured PhD programs offered by Max Planck Institutes
+            International Max Planck Research Schools (IMPRS) are structured PhD programs offered by Research Institutes
             in collaboration with universities. They are fully English-taught, provide TVöD E13 (65%) employment contracts
             (~€1,800/month), and welcome international students. Nepali students are strongly encouraged to apply —
             no German language required! Programs typically start in fall with application deadlines in January-March.
           </p>
           <button
             onClick={() => onNavigate('universities')}
-            className="mt-3 text-xs text-amber-600 hover:text-amber-700 font-medium"
+            className="mt-3 text-xs text-red-600 hover:text-red-700 font-medium"
           >
             Browse all institutions →
           </button>

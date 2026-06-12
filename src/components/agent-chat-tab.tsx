@@ -86,33 +86,33 @@ const PROVIDERS = [
 
 const suggestedPrompts = [
   {
-    label: 'Best MPI for astrophysics',
+    label: 'Best universities for astrophysics',
     icon: BookOpen,
-    prompt: 'What are the best Max Planck Institutes for astrophysics PhD in Germany?',
+    prompt: 'What are the best Japanese universities for astrophysics PhD?',
   },
   {
-    label: 'DAAD scholarships',
+    label: 'MEXT scholarship guide',
     icon: Award,
-    prompt: 'How can Nepali students get DAAD scholarships for a PhD in physics in Germany?',
+    prompt: 'How can Nepali students get MEXT scholarship for a PhD in physics in Japan?',
   },
   {
-    label: 'TVöD E13 explained',
+    label: 'MEXT stipend details',
     icon: FileText,
-    prompt: 'What is TVöD E13 salary for PhD students in Germany?',
+    prompt: 'What is the MEXT scholarship stipend and what does it cover for PhD students in Japan?',
   },
   {
-    label: 'About IMPRS programs',
+    label: 'About RIKEN JRA',
     icon: Globe,
-    prompt: 'Tell me about IMPRS programs for physics PhD in Germany',
+    prompt: 'Tell me about RIKEN Junior Research Associate program for physics PhD students',
   },
   {
     label: 'Application timeline',
     icon: HelpCircle,
-    prompt: 'What is the application timeline for Winter 2026 admission to German PhD programs?',
+    prompt: 'What is the application timeline for April 2026 admission to Japanese PhD programs?',
   },
 ]
 
-const STORAGE_KEY = 'germany-phd-finder-ai-settings'
+const STORAGE_KEY = 'japan-phd-finder-ai-settings'
 
 function loadSettings(): AISettings | null {
   if (typeof window === 'undefined') return null
@@ -479,10 +479,10 @@ export default function AgentChatTab({ watchlistedIds }: AgentChatTabProps) {
               <Bot className="size-8 text-blue-600 dark:text-blue-400" />
             </div>
             <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1">
-              Germany Physics PhD Finder Agent
+              Japan Physics PhD Finder Agent
             </h3>
             <p className="text-sm text-gray-500 dark:text-gray-400 max-w-md mb-2">
-              I can help you find the best PhD programs in Germany, explain DAAD scholarships, TVöD employment, and guide you through the application process.
+              I can help you find the best PhD programs in Japan, explain MEXT scholarships, RIKEN JRA, and guide you through the application process.
             </p>
 
             {/* API Key Status */}
@@ -621,7 +621,7 @@ export default function AgentChatTab({ watchlistedIds }: AgentChatTabProps) {
             onChange={(e) => setInput(e.target.value)}
             placeholder={
               settings?.apiKey
-                ? 'Ask about PhD programs, DAAD, TVöD, IMPRS...'
+                ? 'Ask about PhD programs, MEXT, RIKEN, JSPS...'
                 : 'Configure API key to start chatting...'
             }
             disabled={loading || !settings?.apiKey}

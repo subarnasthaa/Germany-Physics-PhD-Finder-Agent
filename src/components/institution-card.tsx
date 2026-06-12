@@ -31,7 +31,7 @@ export default function InstitutionCard({ institution, isWatchlisted, onToggleWa
     ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'
     : institution.type === 'Leibniz Institute'
     ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
-    : 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400'
+    : 'bg-red-100 text-red-700 dark:bg-amber-900/30 dark:text-amber-400'
 
   const fieldsList = institution.fields.split('|').map((f) => f.trim()).filter(Boolean)
 
@@ -53,7 +53,7 @@ export default function InstitutionCard({ institution, isWatchlisted, onToggleWa
             onClick={onToggleWatchlist}
             className={`shrink-0 p-1 rounded transition-colors ${
               isWatchlisted
-                ? 'text-amber-500 hover:text-amber-600'
+                ? 'text-red-500 hover:text-red-600'
                 : 'text-gray-300 dark:text-gray-600 hover:text-amber-400'
             }`}
           >
@@ -100,7 +100,7 @@ export default function InstitutionCard({ institution, isWatchlisted, onToggleWa
         {/* Key Info */}
         <div className="space-y-1.5 text-xs text-gray-600 dark:text-gray-400">
           <div className="flex items-center gap-2">
-            <ClockIcon className="size-3.5 text-amber-500" />
+            <ClockIcon className="size-3.5 text-red-500" />
             <span>Deadline: {institution.deadline || 'Rolling'}</span>
           </div>
           <div className="flex items-center gap-2">
@@ -119,7 +119,7 @@ export default function InstitutionCard({ institution, isWatchlisted, onToggleWa
         {/* Expand/Collapse */}
         <button
           onClick={() => setExpanded(!expanded)}
-          className="w-full mt-3 flex items-center justify-center gap-1 text-xs text-amber-600 hover:text-amber-700 dark:text-amber-400 transition-colors"
+          className="w-full mt-3 flex items-center justify-center gap-1 text-xs text-red-600 hover:text-red-700 dark:text-amber-400 transition-colors"
         >
           {expanded ? (
             <>Less details <ChevronUp className="size-3" /></>
@@ -176,8 +176,8 @@ export default function InstitutionCard({ institution, isWatchlisted, onToggleWa
               </div>
             )}
             {institution.notesForNepali && (
-              <div className="p-2 rounded bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800">
-                <p className="text-xs text-amber-700 dark:text-amber-300">
+              <div className="p-2 rounded bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-amber-800">
+                <p className="text-xs text-red-700 dark:text-amber-300">
                   🇳🇵 {institution.notesForNepali}
                 </p>
               </div>

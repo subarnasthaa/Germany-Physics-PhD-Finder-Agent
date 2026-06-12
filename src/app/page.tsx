@@ -45,7 +45,7 @@ export default function Home() {
       <footer className="mt-auto border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 py-4 text-center">
           <p className="text-xs text-gray-500 dark:text-gray-400">
-            © 2025 Germany Physics PhD Finder | Built for Nepali Students | Data updated regularly
+            © 2025 Japan Physics PhD Finder | Built for Nepali Students | Data updated regularly
           </p>
         </div>
       </footer>

@@ -57,7 +57,7 @@ export default function WatchlistTab({ watchlistedIds, toggleWatchlist, onNaviga
         <p className="text-sm text-gray-500 dark:text-gray-400 mb-4 text-center">
           Star institutions you&apos;re interested in to track their deadlines and funding info
         </p>
-        <Button onClick={() => onNavigate('universities')} className="bg-amber-600 hover:bg-amber-700 text-white">
+        <Button onClick={() => onNavigate('universities')} className="bg-red-600 hover:bg-red-700 text-white">
           Browse Institutions
         </Button>
       </div>
@@ -92,7 +92,7 @@ export default function WatchlistTab({ watchlistedIds, toggleWatchlist, onNaviga
             ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'
             : inst.type === 'Leibniz Institute'
             ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
-            : 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400'
+            : 'bg-red-100 text-red-700 dark:bg-amber-900/30 dark:text-amber-400'
 
           return (
             <Card key={inst.id} className="hover:shadow-md transition-shadow">

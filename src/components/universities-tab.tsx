@@ -80,7 +80,7 @@ export default function UniversitiesTab({ toggleWatchlist, isWatchlisted }: Univ
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <Loader2 className="size-8 text-amber-600 animate-spin" />
+        <Loader2 className="size-8 text-red-600 animate-spin" />
       </div>
     )
   }
@@ -96,13 +96,13 @@ export default function UniversitiesTab({ toggleWatchlist, isWatchlisted }: Univ
             value={search}
             onChange={(e) => { setSearch(e.target.value); setVisibleCount(12) }}
             placeholder="Search institutions, cities, fields..."
-            className="w-full h-10 pl-10 pr-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-sm text-gray-900 dark:text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+            className="w-full h-10 pl-10 pr-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-sm text-gray-900 dark:text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
           />
         </div>
         <Button
           variant="outline"
           onClick={() => setShowFilters(!showFilters)}
-          className={`h-10 px-3 ${showFilters ? 'border-amber-500 text-amber-600' : ''}`}
+          className={`h-10 px-3 ${showFilters ? 'border-red-500 text-red-600' : ''}`}
         >
           <Filter className="size-4" />
         </Button>
